@@ -202,10 +202,10 @@ body {
 			<div class="nav-item dropdown">
 
             </div>
-			<a href="#" class="nav-item nav-link">Registro de tareas</a>
 
-			<a href="#" class="nav-item nav-link">captura de calificaciones</a>
-			<a href="#" class="nav-item nav-link">Descargar lista de asistencia por asignatura</a>
+
+			<a href="{{ url('/menutareas') }}" class="nav-item nav-link">captura de calificaciones</a>
+			<a href="{{ url('/asistencia') }}" class="nav-item nav-link">Descargar lista de asistencia por asignatura</a>
         </div>
 		<form class="navbar-form form-inline ml-auto">
 		</div>

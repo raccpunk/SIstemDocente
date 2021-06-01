@@ -18,5 +18,15 @@ Route::get('/inicio', function () {
     return view('Menu');
  });
 
+ Route::get('/menutareas', function () {
+    return view('menutareas');
+ });
+ Route::get('/tarea', function () {
+    return view('Tarea');
+ });
+ Route::get('/asistencia', function () {
+    return view('ListaAsistencia');
+ });
+
 
 
