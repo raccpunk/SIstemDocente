@@ -254,7 +254,7 @@
                 <!-- Wrapper for carousel items -->
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="/examples/images/slides/notebook.jpg" class="img-fluid" alt="escuela1">
+
                         <div class="carousel-caption">
                             <h3>Valores y Educación</h3>
                             <p>Los valores y la educación están íntimamente ligados, y es prioritario para el
@@ -266,7 +266,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="/examples/images/slides/tablet.jpg" class="img-fluid" alt="Tablet">
+
                         <div class="carousel-caption">
                             <h3>Respeto</h3>
                             <p>Valor que implica el establecimiento de las relaciones armónicas entre el profesorado,
@@ -275,7 +275,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="/examples/images/slides/workstation.jpg" class="img-fluid" alt="Workstation">
+
                         <div class="carousel-caption">
                             <h3>Responsabilidad</h3>
                             <p>Valor que implica el cumplimiento en tiempo y forma de las obligaciones propias del
@@ -283,7 +283,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="/examples/images/slides/report.jpg" class="img-fluid" alt="Report">
+
                         <div class="carousel-caption">
                             <h3>Honestidad</h3>
                             <p>Determina y afirma la calidad humana para el comportamiento y la expresión de los

@@ -26,5 +26,5 @@
          </select>
          <br>
          <br>
-         <a href="" class="btn btn-success ">Descargar Lista de asistencia</a>
+         <a href="{{url('/ListDoc')}}" class="btn btn-success ">Descargar Lista de asistencia</a>
 

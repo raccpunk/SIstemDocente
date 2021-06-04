@@ -13,7 +13,6 @@ class CreatePersonalTable extends Migration
      */
     public function up()
     {
-        Schema::drop('personal');
         Schema::create('puestos', function (Blueprint $table) {
             $table->id();
             $table->string('funcion');

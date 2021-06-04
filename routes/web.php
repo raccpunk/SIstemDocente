@@ -25,3 +25,4 @@ $path = 'App\\Http\\Controllers\\';
  });
 
 
+ Route::get('/ListDoc', 'App\Http\Controllers\ListaDocController@asistenciaword');
