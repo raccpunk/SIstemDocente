@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Login;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -14,7 +15,7 @@ class LoginController extends Controller
      */
     public function index()
     {
-        //
+        return view('Login');
     }
 
     /**
@@ -35,7 +36,16 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $username = $request->username;
+        $password = $request->password;
+        $user = User::where('password',$password)->where('username',$username);
+        if (!is_null($user)){
+            return view('Menu');
+
+        }
+        else{
+            return view('Login');
+        }
     }
 
     /**
