@@ -1,28 +1,24 @@
 <?php
 
-use App\Http\Controllers\word_pruebaController;
-use App\Http\Controllers\CalificacionesController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
-use League\CommonMark\Block\Element\Document;
-use PhpOffice\PhpSpreadsheet\Worksheet\Row;
-use SebastianBergmann\Template\Template;
-$path = 'App\\Http\\Controllers\\';
- Route::resource('/',$path.'LoginController');
 
- Route::get('/menu', function () {
-    return view('Menu');
- });
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
- Route::get('/menutareas', function () {
-    return view('menutareas');
- });
- Route::get('/tarea', function () {
-    return view('Tarea');
- });
- Route::get('/asistencia', function () {
-    return view('ListaAsistencia');
- });
+Route::get('/', function () {
+    return view('welcome');
+});
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
- Route::get('/ListDoc', 'App\Http\Controllers\ListaDocController@asistenciaword');
+require __DIR__.'/auth.php';

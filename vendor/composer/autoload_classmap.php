@@ -2728,6 +2728,8 @@ return array(
     'Laminas\\Escaper\\Exception\\ExceptionInterface' => $vendorDir . '/laminas/laminas-escaper/src/Exception/ExceptionInterface.php',
     'Laminas\\Escaper\\Exception\\InvalidArgumentException' => $vendorDir . '/laminas/laminas-escaper/src/Exception/InvalidArgumentException.php',
     'Laminas\\Escaper\\Exception\\RuntimeException' => $vendorDir . '/laminas/laminas-escaper/src/Exception/RuntimeException.php',
+    'Laravel\\Breeze\\BreezeServiceProvider' => $vendorDir . '/laravel/breeze/src/BreezeServiceProvider.php',
+    'Laravel\\Breeze\\Console\\InstallCommand' => $vendorDir . '/laravel/breeze/src/Console/InstallCommand.php',
     'Laravel\\Sail\\Console\\InstallCommand' => $vendorDir . '/laravel/sail/src/Console/InstallCommand.php',
     'Laravel\\Sail\\Console\\PublishCommand' => $vendorDir . '/laravel/sail/src/Console/PublishCommand.php',
     'Laravel\\Sail\\SailServiceProvider' => $vendorDir . '/laravel/sail/src/SailServiceProvider.php',
