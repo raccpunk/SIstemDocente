@@ -7,101 +7,20 @@ use Illuminate\Http\Request;
 
 class ListaDocController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function asistenciaword($asignatura,$grado,$grupo)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ListaDoc  $listaDoc
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ListaDoc $listaDoc)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ListaDoc  $listaDoc
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ListaDoc $listaDoc)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ListaDoc  $listaDoc
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ListaDoc $listaDoc)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ListaDoc  $listaDoc
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ListaDoc $listaDoc)
-    {
-        //
-    }
-    public function asistenciaword()
-    {
-
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
-
-
         $section = $phpWord->addSection(array('orientation' => 'landscape'));
         $fontStyleName = 'oneUserDefinedStyle';
         $phpWord->addFontStyle(
             $fontStyleName,
             array('name' => 'Tahoma', 'size' => 10, 'color' => '1B2232', 'bold' => true)
         );
-
-
         $header = array('size' => 14, 'bold' => true,'align'=>'both');
         $nature = array('size' => 11, 'bold' => true);
         $nature2 = array('size' => 9, 'bold' => false);
-        $sources = file_get_contents('C:\xampp\htdocs\sistemaDocente\app\img\imgdoc.png');
-
-
+        $path = 'App\\';
+        $sources = file_get_contents('C:\xampp\htdocs\SIstemDocente\app\img\imgdoc.png');
         $section->addImage(
 
             $sources,
@@ -115,7 +34,7 @@ class ListaDocController extends Controller
 
             )
             );
-
+//head document
         //$section->addTextBreak(1);
         $section->addText('                                                                       CURSO ESCOLAR 2020-2021', $header);
         $section->addText('                                                                                               PROF:___________________________   ASIGNATURA:________________', $fontStyleName);
@@ -130,9 +49,7 @@ class ListaDocController extends Controller
         $fancyTableFontStyle = array('bold' => true);
         $phpWord->addTableStyle($fancyTableStyleName, $fancyTableStyle, $fancyTableFirstRowStyle);
         $table = $section->addTable($fancyTableStyleName);
-
-
-
+//head table
             $table->addRow();
             $table->addCell(500)->addText(' No',$nature);
             $table->addCell(4000)->addText('NOMBRE',$nature);
@@ -160,7 +77,7 @@ class ListaDocController extends Controller
             $table->addCell(500)->addText(' ');
             $table->addCell(500)->addText(' ');
             $table->addCell(500)->addText(' ');
-
+//start student row
             $table->addRow();
             $table->addCell(500)->addText(' ');
             $table->addCell(4000)->addText('');
@@ -189,22 +106,11 @@ class ListaDocController extends Controller
             $table->addCell(500)->addText(' ');
             $table->addCell(500)->addText(' ');
 
-
-
-
-
-        // Saving the document as OOXML file...
+        //create doc
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save('Asistencia.docx');
-
-        // Saving the document as ODF file...
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'ODText');
-        $objWriter->save('Asistencia.odt');
-
-        // Saving the document as HTML file...
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-
-        return response()->download('Asistencia.docx');
+        //download doc and delete after send
+        return response()->download('Asistencia.docx')->deleteFileAfterSend();
     }
 }
 
