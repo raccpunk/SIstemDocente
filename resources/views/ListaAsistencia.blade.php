@@ -1,13 +1,7 @@
-<link rel="dns-prefetch" href="//fonts.gstatic.com">
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"  rel="stylesheet">
-<div class="card-header"></div>
-<ul class="navbar-nav ml-auto">
-<div class="card-body">
-
-</div>
+<x-app-layout>
 <div class="container">
+    <h1 class="mx-auto">Lista de asistencia</h1>
     <div class="row">
-
       <div class="col text-center">
         <select name="OS">
             <option value="1">Materia</option>
@@ -27,4 +21,8 @@
          <br>
          <br>
          <a href="{{url('/ListDoc')}}" class="btn btn-success ">Descargar Lista de asistencia</a>
-
+      </div>
+    </div>
+</div>
+</div>
+</x-app-layout>
