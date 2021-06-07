@@ -1,23 +1,27 @@
 <x-app-layout>
 <div class="container mt-4">
     <div class="row">
+        <div class="text-center">
+            <label style="font-size: 30px;" class="col-md-3 mt-2 mr-8" for="asignatura">Asignatura</label>
+            <label style="font-size: 30px;" class="col-md-3 mt-2 md:hover:text-right" for="grado">Grado</label>
+            <label style="font-size: 30px;" class="col-md-2 mt-2 md:-right-2" for="grupo">Grupo</label>
+            <label style="font-size: 30px;" class="col-md-3 mt-2 mr-3.5" for="ciclo_escolar">Ciclo escolar</label>
+        </div>
+    </div>
+    <div class="row">
         <div class="col text-center">
-            <select name="OS">
-                <option value="1">Materia</option>
-                <option value="2">...</option>
+            <select class="col-md-3 mt-2 ml-2 mr-16" name="asignatura">
+                <option value="">selecciona...</option>
             </select>
-            <select name="OS">
-                <option value="1">Grado</option>
-                <option value="2">Primer Grado</option>
-                <option value="2">Segundo Grado</option>
-                <option value="2">Tercer Grado</option>
+            <select class="col-md-2 mt-2 mr-10" name="grado">
+                <option value="">selecciona...</option>
             </select>
-            <select name="OS">
-                <option value="1">Grupo</option>
-                <option value="2">A</option>
-                <option value="3">B</option>
+            <select class="col-md-2 mt-2 mr-10" name="grupo">
+                <option value="">selecciona...</option>
             </select>
-
+            <select class="col-md-3 mt-2 mr-10" name="ciclo_escolar">
+               <option value="">selecciona...</option>
+            </select>
         </div>
     </div>
 </div>

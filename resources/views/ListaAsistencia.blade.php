@@ -1,22 +1,25 @@
 <x-app-layout>
 <div class="container">
-    <h1 class="mx-auto">Lista de asistencia</h1>
+    <div class="row text-center mt-5">
+        <h1 class="mx-auto">Lista de asistencia</h1>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <label style="font-size: 30px;" class="col-md-3 mt-2" for="ciclo_escolar">Ciclo escolar</label>
+            <label style="font-size: 30px;" class="col-md-3 mt-2" for="grado">Grado</label>
+            <label style="font-size: 30px;" class="col-md-3 mt-2" for="grupo">Grupo</label>
+        </div>
+    </div>
     <div class="row">
       <div class="col text-center">
-        <select name="OS">
-            <option value="1">Materia</option>
-            <option value="2">...</option>
+        <select class="col-md-3 mt-2 mr-5" name="ciclo_escolar">
+            <option value="">selecciona...</option>
          </select>
-         <select name="OS">
-            <option value="1">Grado</option>
-            <option value="2">Primer Grado</option>
-            <option value="2">Segundo Grado</option>
-            <option value="2">Tercer Grado</option>
+         <select class="col-md-3 mt-2 mr-5" name="grado">
+            <option value="">selecciona...</option>
          </select>
-         <select name="OS">
-            <option value="1">Grupo</option>
-            <option value="2">A</option>
-            <option value="3">B</option>
+         <select class="col-md-3 mt-2 mr-5" name="grupo">
+            <option value="">selecciona...</option>
          </select>
          <br>
          <br>

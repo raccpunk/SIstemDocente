@@ -25,11 +25,11 @@
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-{{--            <header class="bg-white shadow">--}}
-{{--                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">--}}
-{{--                    {{ $header }}--}}
-{{--                </div>--}}
-{{--            </header>--}}
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <p class="navbar-brand">Escuela Secundaria <b style=" color: #20b0b9;">Fray Diego De Landa</b></p>
+                </div>
+            </header>
 
             <!-- Page Content -->
             <main>

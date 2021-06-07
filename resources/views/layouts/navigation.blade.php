@@ -1,15 +1,11 @@
-<style>
-    b{
-        color: #20b0b9;
-    }
-</style>
+
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <div class="flex-shrink-0 flex items-center">
-                    <p class="navbar-brand">Escuela Secundaria <b>Fray Diego De Landa</b></p>
+                    <img src="img/icon.png" class="w-auto" style="height: 65px;" alt="logo">
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -77,7 +73,7 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <a href="#" class="navbar-brand">Escuela Secundaria <b>Fray Diego De Landa</b></a>
+{{--            <a href="#" class="navbar-brand">Escuela Secundaria <b>Fray Diego De Landa</b></a>--}}
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
