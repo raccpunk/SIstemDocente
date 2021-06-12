@@ -1,13 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Alumnos;
+use App\Models\CicloEscolar;
+use App\Models\Grados;
+use App\Models\Grupos;
 use App\Models\ListaDoc;
 use Illuminate\Http\Request;
-
 class ListaDocController extends Controller
 {
-    public function asistenciaword($asignatura,$grado,$grupo)
+    public function index()
+    {
+        $grupos = Grupos::all();
+        $grados = Grados::all();
+        $ciclo_escolar = CicloEscolar::all();
+
+        return view('ListaAsistencia',compact('grupos','grados','ciclo_escolar'));
+    }
+
+    public function asistenciaword($ciclo_escolar,$grado,$grupo)
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection(array('orientation' => 'landscape'));
@@ -20,20 +31,18 @@ class ListaDocController extends Controller
         $nature = array('size' => 11, 'bold' => true);
         $nature2 = array('size' => 9, 'bold' => false);
         $path = 'App\\';
-        $sources = file_get_contents('C:\xampp\htdocs\SIstemDocente\app\img\imgdoc.png');
-        $section->addImage(
-
-            $sources,
-            array(
-                'width'         => 265,
-                'height'        => 100,
-                'marginTop'     => 500,
-                'marginLeft'    => 500,
-                'wrappingStyle' => 'behind',
-                'positioning' => 'absolute',
-
-            )
-            );
+        //$sources = file_get_contents('app/img/imgdoc.png/');
+        //$section->addImage(
+          //  $sources,
+           // array(
+             //   'width'         => 265,
+               // 'height'        => 100,
+                //'marginTop'     => 500,
+                //'marginLeft'    => 500,
+                //'wrappingStyle' => 'behind',
+                //'positioning' => 'absolute',
+            //)
+       // );
 //head document
         //$section->addTextBreak(1);
         $section->addText('                                                                       CURSO ESCOLAR 2020-2021', $header);
@@ -49,62 +58,72 @@ class ListaDocController extends Controller
         $fancyTableFontStyle = array('bold' => true);
         $phpWord->addTableStyle($fancyTableStyleName, $fancyTableStyle, $fancyTableFirstRowStyle);
         $table = $section->addTable($fancyTableStyleName);
-//head table
-            $table->addRow();
-            $table->addCell(500)->addText(' No',$nature);
-            $table->addCell(4000)->addText('NOMBRE',$nature);
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
+
+        //get alumnos
+        $alumnos = Alumnos::select('*')
+            ->join('grupo_alumnos','grupo_alumnos.alumno_id','=','alumnos.id')
+            ->where('grupo_alumnos.ciclo_escolar_id','=',$ciclo_escolar)
+            ->where('grupo_id','=',$grupo)
+            ->where('grado_id','=',$grado)->get();
+        //head table
+        $table->addRow();
+        $table->addCell(500)->addText(' No',$nature);
+        $table->addCell(4000)->addText('NOMBRE',$nature);
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
 //start student row
-            $table->addRow();
-            $table->addCell(500)->addText(' ');
-            $table->addCell(4000)->addText('');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
-            $table->addCell(500)->addText(' ');
+        $table->addRow();
+        foreach ($alumnos as $alumno){
+            $table->addCell(4000)->addText($alumno->nombre);
+
+        }
+        $table->addCell(500)->addText('');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
 
         //create doc
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
