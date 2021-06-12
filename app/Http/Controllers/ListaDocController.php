@@ -31,23 +31,26 @@ class ListaDocController extends Controller
         $nature = array('size' => 11, 'bold' => true);
         $nature2 = array('size' => 9, 'bold' => false);
         $path = 'App\\';
-        //$sources = file_get_contents('app/img/imgdoc.png/');
-        //$section->addImage(
-          //  $sources,
-           // array(
-             //   'width'         => 265,
-               // 'height'        => 100,
-                //'marginTop'     => 500,
-                //'marginLeft'    => 500,
-                //'wrappingStyle' => 'behind',
-                //'positioning' => 'absolute',
-            //)
-       // );
+        $sources = file_get_contents(__DIR__.'/img/imgdoc.png',true);
+        $section->addImage(
+            $sources,
+            array(
+                'width'         => 265,
+                'height'        => 100,
+                'marginTop'     => 500,
+                'marginLeft'    => 500,
+                'wrappingStyle' => 'behind',
+                'positioning' => 'absolute',
+            )
+        );
+        $nombre_ciclo = CicloEscolar::find($ciclo_escolar)->nombre;
+        $nombre_grado = Grados::find($grado)->nombre_corto;
+        $nombre_grupo = Grupos::find($grupo)->nombre;
 //head document
         //$section->addTextBreak(1);
-        $section->addText('                                                                       CURSO ESCOLAR 2020-2021', $header);
+        $section->addText('                                                                       '.$nombre_ciclo, $header);
         $section->addText('                                                                                               PROF:___________________________   ASIGNATURA:________________', $fontStyleName);
-        $section->addText('                                                                                               MES:___________________________  UNIDAD________________ GRUPO:1°A', $fontStyleName);
+        $section->addText('                                                                                               MES:___________________________  UNIDAD________________ GRUPO:'.$nombre_grado.$nombre_grupo, $fontStyleName);
         $section->addText(' ');
 
 
@@ -64,7 +67,7 @@ class ListaDocController extends Controller
             ->join('grupo_alumnos','grupo_alumnos.alumno_id','=','alumnos.id')
             ->where('grupo_alumnos.ciclo_escolar_id','=',$ciclo_escolar)
             ->where('grupo_id','=',$grupo)
-            ->where('grado_id','=',$grado)->get();
+            ->where('grado_id','=',$grado)->orderBy('apellido_paterno','asc')->get();
         //head table
         $table->addRow();
         $table->addCell(500)->addText(' No',$nature);
@@ -93,37 +96,39 @@ class ListaDocController extends Controller
         $table->addCell(500)->addText(' ');
         $table->addCell(500)->addText(' ');
         $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText(' ');
 //start student row
-        $table->addRow();
-        foreach ($alumnos as $alumno){
-            $table->addCell(4000)->addText($alumno->nombre);
-
+        foreach ($alumnos as $key=>$alumno){
+            $table->addRow();
+            $table->addCell(500)->addText($key+1);
+            $table->addCell(6000)->addText($alumno->apellido_paterno.' '.$alumno->apellido_materno.' '.$alumno->nombres);
+            $table->addCell(500)->addText('');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
+            $table->addCell(500)->addText(' ');
         }
-        $table->addCell(500)->addText('');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
-        $table->addCell(500)->addText(' ');
+
 
         //create doc
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
