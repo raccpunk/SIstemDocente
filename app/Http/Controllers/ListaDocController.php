@@ -128,11 +128,10 @@ class ListaDocController extends Controller
             $table->addCell(500)->addText(' ');
             $table->addCell(500)->addText(' ');
         }
-
-
         //create doc
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save('Asistencia.docx');
+
         //download doc and delete after send
         return response()->download('Asistencia.docx')->deleteFileAfterSend();
     }

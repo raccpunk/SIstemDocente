@@ -10,6 +10,9 @@
                 <label style="font-size: 30px;" class="col-md-3 mt-2" for="grupo">Grupo</label>
             </div>
         </div>
+        <div class="alert-warning" id="alert">
+            Todos los campos son requeridos
+        </div>
         <div class="row">
                 <div class="col text-center">
                     <select class="col-md-3 mt-2 mr-5" name="ciclo_escolar" id ='ciclo_escolar'>
@@ -38,14 +41,22 @@
     </div>
     <script type="application/javascript">
         let button = document.getElementById('button');
-
+        var alert = document.getElementById('alert');
+        alert.style.visibility = 'hidden';
         button.addEventListener('click',function () {
             let ciclo_escolar = document.getElementById('ciclo_escolar').value;
             let grado = document.getElementById('grado').value;
             let grupo = document.getElementById('grupo').value;
             console.log(grado)
-            url = `http://${window.location.host}/asistenciaDoc/${ciclo_escolar}/${grado}/${grupo}`;
-            window.open(url)
+
+            if(ciclo_escolar !== ''&& grado !== '' && grupo !== ''){
+                alert.style.visibility = 'hidden';
+                url = `http://${window.location.host}/asistenciaDoc/${ciclo_escolar}/${grado}/${grupo}`;
+                window.open(url)
+            }
+            else{
+                alert.style.visibility = 'visible';
+            }
         });
 
     </script>

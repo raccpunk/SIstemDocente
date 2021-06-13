@@ -1,1 +1,1 @@
-<img src="../../../app/Http/Controllers/img/icon.png" alt="logo">
+<img src="img/icon.png" alt="logo">
