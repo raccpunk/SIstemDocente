@@ -1,26 +1,45 @@
 <x-app-layout>
 <div class="container mt-4">
     <div class="row">
-        <div class="text-center">
-            <label style="font-size: 30px;" class="col-md-3 mt-2 mr-8" for="asignatura">Asignatura</label>
-            <label style="font-size: 30px;" class="col-md-3 mt-2 md:hover:text-right" for="grado">Grado</label>
-            <label style="font-size: 30px;" class="col-md-2 mt-2 md:-right-2" for="grupo">Grupo</label>
-            <label style="font-size: 30px;" class="col-md-3 mt-2 mr-3.5" for="ciclo_escolar">Ciclo escolar</label>
+        <div class="">
+            <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="asignatura">Asignatura</label>
+            <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="grado">Grado</label>
+            <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="grupo">Grupo</label>
+            <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="periodo">Periodos</label>
+            <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="ciclo_escolar">Ciclo escolar</label>
         </div>
     </div>
     <div class="row">
-        <div class="col text-center">
-            <select class="col-md-3 mt-2 ml-2 mr-16" name="asignatura">
+        <div class="">
+            <select class="col-md-2 mt-2 mr-5" name="asignatura">
                 <option value="">selecciona...</option>
+                @foreach($asignaturas as $item)
+                    <option value="{{$item->id}}">{{$item->nombre}}</option>
+                @endforeach
             </select>
-            <select class="col-md-2 mt-2 mr-10" name="grado">
+            <select class="col-md-2 mt-2 mr-5" name="grado">
                 <option value="">selecciona...</option>
+                @foreach($grados as $item)
+                    <option value="{{$item->id}}">{{$item->nombre_largo}}</option>
+                @endforeach
             </select>
-            <select class="col-md-2 mt-2 mr-10" name="grupo">
+            <select class="col-md-2 mt-2 mr-5" name="grupo">
                 <option value="">selecciona...</option>
+                @foreach($grupos as $item)
+                    <option value="{{$item->id}}">{{$item->nombre}}</option>
+                @endforeach
             </select>
-            <select class="col-md-3 mt-2 mr-10" name="ciclo_escolar">
+            <select class="col-md-2 mt-2 mr-5" name="periodo">
+                <option value="">selecciona...</option>
+                @foreach($periodos as $item)
+                    <option value="{{$item->id}}">{{$item->nombre}}</option>
+                @endforeach
+            </select>
+            <select class="col-md-2 mt-2 mr-5" name="ciclo_escolar">
                <option value="">selecciona...</option>
+                @foreach($ciclos as $item)
+                    <option value="{{$item->id}}">{{$item->nombre}}</option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -34,65 +53,31 @@
     <div class="table-responsive ml-5 mr-5">
             <table class="table table-striped">
                 <thead class="table-light">
-                <tr>
-                    <th></th>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
-                    <th>promedio</th>
-                </tr>
-                    <tr>
-                        <th>Nombre del alumno</th>
-                        <th>%</th>
-                        <th>%</th>
-                        <th>%</th>
-                        <th>%</th>
-                        <th>100%</th>
-                    </tr>
 
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Valor</th>
+                        <th>Asignatura</th>
+                        <th>Grado</th>
+                        <th>Grupo</th>
+                        <th>Periodo</th>
+                        <th>Ciclo escolar</th>
+                    </tr>
                 </thead>
                 <tbody>
+                @foreach($tareas as $tarea)
                     <tr>
-                        <td></td>
-                        <td>8</td>
-                        <td>7</td>
-                        <td>8</td>
-                        <td>10</td>
-                        <td>8</td>
+                        <td>{{$tarea->nombre}}</td>
+                        <td>{{$tarea->descripcion}}</td>
+                        <td>{{$tarea->valor}}</td>
+                        <td>{{\App\Models\Asignaturas::find($tarea->materia_id)->nombre}}</td>
+                        <td>{{\App\Models\Grados::find($tarea->grado_id)->nombre_corto}}</td>
+                        <td>{{\App\Models\Grupos::find($tarea->grupo_id)->nombre}}</td>
+                        <td>{{\App\Models\Periodos::find($tarea->periodo_id)->nombre}}</td>
+                        <td>{{\App\Models\CicloEscolar::find($tarea->ciclo_escolar_id)->nombre}}</td>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td>8</td>
-                        <td>7</td>
-                        <td>8</td>
-                        <td>10</td>
-                        <td>8</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>8</td>
-                        <td>7</td>
-                        <td>8</td>
-                        <td>10</td>
-                        <td>8</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>8</td>
-                        <td>7</td>
-                        <td>8</td>
-                        <td>10</td>
-                        <td>8</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>8</td>
-                        <td>7</td>
-                        <td>8</td>
-                        <td>10</td>
-                        <td>8</td>
-                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
