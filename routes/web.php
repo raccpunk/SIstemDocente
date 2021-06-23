@@ -14,9 +14,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 //Tareas
-Route::get('/tareas', [TareasController::class,'index'])->middleware(['auth'])->name('Tarea.Index');
+Route::get('/tasks', [TareasController::class,'index'])->middleware(['auth'])->name('Tarea.Index');
 Route::get('/create', [TareasController::class,'create'])->middleware(['auth'])->name('Tarea.Create');
 Route::post('/taskpost',[TareasController::class,'store'])->middleware(['auth'])->name('Tarea.post');
+Route::get('/studentstask/{tarea}/{grado}/{grupo}/{periodo}/{ciclo}',[TareasController::class,'alumnoTarea'])->middleware(['auth']);
+Route::post('/studenttaskpost',[TareasController::class,'storeAlumno'])->middleware(['auth'])->name('Tarea.postAlumnos');
 
 //asistencia
 Route::get('/asistencia',[ListaDocController::class,'index'])->middleware(['auth'])->name('Asistencia.Index');

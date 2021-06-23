@@ -5,7 +5,7 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <div class="flex-shrink-0 flex items-center">
-                    <img src="img/icon.png" class="w-auto" style="height: 65px;" alt="logo">
+                    <img src="{{asset('img/icon.png')}}" class="w-auto" style="height: 65px;" alt="logo">
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>

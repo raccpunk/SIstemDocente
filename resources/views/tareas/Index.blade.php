@@ -52,7 +52,7 @@
     </div>
     <div class="table-responsive ml-5 mr-5">
             <table class="table table-striped">
-                <thead class="table-light">
+                <thead class="table-dark">
 
                     <tr>
                         <th>Nombre</th>
@@ -63,6 +63,7 @@
                         <th>Grupo</th>
                         <th>Periodo</th>
                         <th>Ciclo escolar</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,6 +77,11 @@
                         <td>{{\App\Models\Grupos::find($tarea->grupo_id)->nombre}}</td>
                         <td>{{\App\Models\Periodos::find($tarea->periodo_id)->nombre}}</td>
                         <td>{{\App\Models\CicloEscolar::find($tarea->ciclo_escolar_id)->nombre}}</td>
+                        @if($tarea->isCaptured)
+{{--                            <td class="text-center"><a href="{{url('/studentstask/'.$tarea->id).'/'.$tarea->grado_id.'/'.$tarea->grupo_id.'/'.$tarea->periodo_id.'/'.$tarea->ciclo_escolar_id}}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>--}}
+                        @else
+                        <td class="text-center"><a href="{{url('/studentstask/'.$tarea->id).'/'.$tarea->grado_id.'/'.$tarea->grupo_id.'/'.$tarea->periodo_id.'/'.$tarea->ciclo_escolar_id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                        @endif
                     </tr>
                 @endforeach
                 </tbody>
