@@ -19,7 +19,8 @@ Route::get('/create', [TareasController::class,'create'])->middleware(['auth'])-
 Route::post('/taskpost',[TareasController::class,'store'])->middleware(['auth'])->name('Tarea.post');
 Route::get('/studentstask/{tarea}/{grado}/{grupo}/{periodo}/{ciclo}',[TareasController::class,'alumnoTarea'])->middleware(['auth']);
 Route::post('/studenttaskpost',[TareasController::class,'storeAlumno'])->middleware(['auth'])->name('Tarea.postAlumnos');
-
+Route::get('/asistencia',[ListaDocController::class,'index'])->middleware(['auth'])->name('Asistencia.Index');
+Route::get('/calificacionesDoc/{ciclo_escolar}/{grado}/{grupo}', [TareasController::class,'tareasword'])->middleware(['auth'])->name('calificacion.Download');
 //asistencia
 Route::get('/asistencia',[ListaDocController::class,'index'])->middleware(['auth'])->name('Asistencia.Index');
 Route::get('/asistenciaDoc/{ciclo_escolar}/{grado}/{grupo}', [ListaDocController::class,'asistenciaword'])->middleware(['auth'])->name('Asistencia.Download');
