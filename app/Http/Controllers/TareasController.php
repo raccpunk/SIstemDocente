@@ -141,7 +141,7 @@ class TareasController extends Controller
         $table->addRow();
         $table->addCell(500)->addText(' No',$nature);
         $table->addCell(4000)->addText('NOMBRE',$nature);
-        $table->addCell(500)->addText(' ');
+        $table->addCell(500)->addText('Tarea 1',$nature);
         $table->addCell(500)->addText(' ');
         $table->addCell(500)->addText(' ');
         $table->addCell(500)->addText(' ');
