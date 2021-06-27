@@ -9,33 +9,37 @@
             <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="ciclo_escolar">Ciclo escolar</label>
         </div>
     </div>
+{{--    <div class="alert alert-danger alert-dismissible fade show" id="alert" role="alert">--}}
+{{--        <strong>Holy guacamole!</strong> You should check in on some of those fields below.--}}
+{{--        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>--}}
+{{--    </div>--}}
     <div class="row">
         <div class="">
-            <select class="col-md-2 mt-2 mr-5" name="asignatura">
+            <select class="col-md-2 mt-2 mr-5" name="asignatura" id="asignatura">
                 <option value="">selecciona...</option>
                 @foreach($asignaturas as $item)
                     <option value="{{$item->id}}">{{$item->nombre}}</option>
                 @endforeach
             </select>
-            <select class="col-md-2 mt-2 mr-5" name="grado">
+            <select class="col-md-2 mt-2 mr-5" name="grado" id="grado">
                 <option value="">selecciona...</option>
                 @foreach($grados as $item)
                     <option value="{{$item->id}}">{{$item->nombre_largo}}</option>
                 @endforeach
             </select>
-            <select class="col-md-2 mt-2 mr-5" name="grupo">
+            <select class="col-md-2 mt-2 mr-5" name="grupo" id="grupo">
                 <option value="">selecciona...</option>
                 @foreach($grupos as $item)
                     <option value="{{$item->id}}">{{$item->nombre}}</option>
                 @endforeach
             </select>
-            <select class="col-md-2 mt-2 mr-5" name="periodo">
+            <select class="col-md-2 mt-2 mr-5" name="periodo" id="periodo">
                 <option value="">selecciona...</option>
                 @foreach($periodos as $item)
                     <option value="{{$item->id}}">{{$item->nombre}}</option>
                 @endforeach
             </select>
-            <select class="col-md-2 mt-2 mr-5" name="ciclo_escolar">
+            <select class="col-md-2 mt-2 mr-5" name="ciclo_escolar" id="ciclo_escolar">
                <option value="">selecciona...</option>
                 @foreach($ciclos as $item)
                     <option value="{{$item->id}}">{{$item->nombre}}</option>
@@ -78,9 +82,13 @@
                         <td>{{\App\Models\Periodos::find($tarea->periodo_id)->nombre}}</td>
                         <td>{{\App\Models\CicloEscolar::find($tarea->ciclo_escolar_id)->nombre}}</td>
                         @if($tarea->isCaptured)
-{{--                            <td class="text-center"><a href="{{url('/studentstask/'.$tarea->id).'/'.$tarea->grado_id.'/'.$tarea->grupo_id.'/'.$tarea->periodo_id.'/'.$tarea->ciclo_escolar_id}}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>--}}
+                            <td class="text-center">
+                                <a class="mr-2" href="{{url('/detailstask/'.$tarea->id).'/'.$tarea->grado_id.'/'.$tarea->grupo_id.'/'.$tarea->periodo_id.'/'.$tarea->ciclo_escolar_id}}" title="Ver detalles" ><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                <a class="mr-2" href="{{url('/studentstask/'.$tarea->id).'/'.$tarea->grado_id.'/'.$tarea->grupo_id.'/'.$tarea->periodo_id.'/'.$tarea->ciclo_escolar_id}}" title="Editar" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            </td>
+
                         @else
-                        <td class="text-center"><a href="{{url('/studentstask/'.$tarea->id).'/'.$tarea->grado_id.'/'.$tarea->grupo_id.'/'.$tarea->periodo_id.'/'.$tarea->ciclo_escolar_id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                        <td class="text-center"><a href="{{url('/studentstask/'.$tarea->id).'/'.$tarea->grado_id.'/'.$tarea->grupo_id.'/'.$tarea->periodo_id.'/'.$tarea->ciclo_escolar_id}}" title="Capturar"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                         @endif
                     </tr>
                 @endforeach
@@ -88,4 +96,5 @@
             </table>
         </div>
 </div>
+{{--    <script src="js/tareas/index.js"></script>--}}
 </x-app-layout>
