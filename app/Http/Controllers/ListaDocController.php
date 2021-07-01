@@ -13,12 +13,10 @@ class ListaDocController extends Controller
     {
         $grupos = Grupos::all();
         $grados = Grados::all();
-        $ciclo_escolar = CicloEscolar::all();
-
-        return view('ListaAsistencia',compact('grupos','grados','ciclo_escolar'));
+        return view('ListaAsistencia',compact('grupos','grados'));
     }
 
-    public function asistenciaword($ciclo_escolar,$grado,$grupo)
+    public function asistenciaword($grado,$grupo)
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection(array('orientation' => 'landscape'));
@@ -43,7 +41,8 @@ class ListaDocController extends Controller
                 'positioning' => 'absolute',
             )
         );
-        $nombre_ciclo = CicloEscolar::find($ciclo_escolar)->nombre;
+        $ciclo_escolar = CicloEscolar::orderBy('fecha_inicio','asc')->first();
+        $nombre_ciclo = $ciclo_escolar->nombre;
         $nombre_grado = Grados::find($grado)->nombre_corto;
         $nombre_grupo = Grupos::find($grupo)->nombre;
 //head document

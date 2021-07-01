@@ -64,12 +64,7 @@
         </div>
         <div class="form-group row">
             <label for="ciclo_escolar" class="col-form-label col-4">Ciclo escolar</label>
-            <select class="form-control" name="ciclo_escolar" required="required">
-                <option value="">selecciona...</option>
-                @foreach($ciclos as $item)
-                    <option value="{{$item->id}}">{{$item->nombre}}</option>
-                @endforeach
-            </select>
+            <input name="ciclo_escolar" value="{{$ciclo->nombre}}" type="text" readonly>
         </div>
 		<div class="form-group row">
 			<div class="col-8 offset-4">

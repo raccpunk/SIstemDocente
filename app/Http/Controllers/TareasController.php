@@ -5,6 +5,7 @@ use App\Models\Alumnos;
 use App\Models\AlumnoTareas;
 use App\Models\Asignaturas;
 use App\Models\CicloEscolar;
+use App\Models\Clases;
 use App\Models\Grados;
 use App\Models\GrupoAlumno;
 use App\Models\Grupos;
@@ -19,24 +20,30 @@ class TareasController extends Controller
 {
 
     public function index(){
-
-        $periodos = Periodos::all();
-        $grados = Grados::all();
-        $grupos = Grupos::all();
-        $ciclos = CicloEscolar::all();
-        $asignaturas = Asignaturas::all();
         $maestro_id = Personal::where('usuario_id',Auth::user()->id)->first()->id;
+        $clases = Clases::where('maestro_id',$maestro_id)->get();
+//        $array_clases = [];
+//        foreach ($clases as $item){
+//            foreach ($array_clases as $clase){
+//            if(in_array($item->asignatura_id,$array_clases,false))
+//            {
+//                array_push($array_clases, $item);
+//            }
+//            }
+//        }
+//        $array_clases = $clases;
+//        dd($array_clases);
+        $periodos = Periodos::all();
         $tareas = Tareas::where('maestro_id',$maestro_id)->get();
-        return view('tareas.Index', compact('periodos', 'grados', 'grupos','ciclos','asignaturas','tareas'));
+        return view('tareas.Index', compact('periodos', 'clases','tareas'));
     }
     public function create()
     {
         $periodos = Periodos::all();
-        $grados = Grados::all();
-        $grupos = Grupos::all();
-        $ciclos = CicloEscolar::all();
-        $asignaturas = Asignaturas::all();
-        return view('tareas.Create', compact('periodos', 'grados', 'grupos','ciclos','asignaturas'));
+        $maestro_id = Personal::where('usuario_id',Auth::user()->id)->first()->id;
+        $clases = Clases::where('maestro_id',$maestro_id);
+        $ciclo = CicloEscolar::orderBy('fecha_inicio','asc')->first();
+        return view('tareas.Create', compact('periodos', 'clases','ciclo'));
     }
 
     /**
@@ -50,7 +57,7 @@ class TareasController extends Controller
         $tarea->periodo_id = $request->periodo;
         $tarea->grado_id = $request->grado;
         $tarea->grupo_id = $request->grupo;
-        $tarea->ciclo_escolar_id = $request->ciclo_escolar;
+        $tarea->ciclo_escolar_id = CicloEscolar::orderBy('fecha_inicio','asc')->first()->id;
         $tarea->materia_id = $request->materia;
         $maestro_id = Personal::where('usuario_id',Auth::user()->id)->first()->id;
         $tarea->isCaptured = false;
@@ -58,7 +65,8 @@ class TareasController extends Controller
         $tarea->save();
         return $this->index();
     }
-    public function alumnoTarea($tarea,$grado,$grupo,$periodo,$ciclo){
+    public function alumnoTarea($tarea,$grado,$grupo,$periodo){
+        $ciclo = CicloEscolar::orderBy('fecha_inicio','asc')->first()->id;
         $grupoAlumno = GrupoAlumno::where('grado_id',$grado)->where('grupo_id',$grupo)->where('ciclo_escolar_id',$ciclo)->get();
         $alumnos = [];
         foreach ($grupoAlumno as $item){
@@ -67,7 +75,8 @@ class TareasController extends Controller
         sort($alumnos);
         return view('tareas.Alumnos',compact('alumnos','tarea','grado','grupo','periodo','ciclo'));
     }
-    public function detailsTarea($tarea,$grado,$grupo,$periodo,$ciclo){
+    public function detailsTarea($tarea,$grado,$grupo,$periodo){
+        $ciclo = CicloEscolar::orderBy('fecha_inicio','asc')->first()->id;
         $grupoAlumno = GrupoAlumno::where('grado_id',$grado)->where('grupo_id',$grupo)->where('ciclo_escolar_id',$ciclo)->get();
         $alumnos = [];
         foreach ($grupoAlumno as $item){
@@ -85,7 +94,7 @@ class TareasController extends Controller
                 $alumnoTarea->grupo_id = $request->grupo;
                 $alumnoTarea->grado_id = $request->grado;
                 $alumnoTarea->tarea_id = $request->tarea;
-                $alumnoTarea->ciclo_escolar_id = $request->ciclo_escolar;
+                $alumnoTarea->ciclo_escolar_id = CicloEscolar::orderBy('fecha_inicio','asc')->first()->id;
                 $alumnoTarea->periodo_id = $request->periodo;
                 $alumnoTarea->alumno_id = $request->Alumnos['id'][$key];
                 $alumnoTarea->calificacion = $calif;

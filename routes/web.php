@@ -23,5 +23,5 @@ Route::get('/detailstask/{tarea}/{grado}/{grupo}/{periodo}/{ciclo}',[TareasContr
 Route::get('/TareasDoc/{tarea}/{ciclo_escolar}/{grado}/{grupo}/{periodo}', [TareasController::class,'tareasword'])->middleware(['auth'])->name('calificacion.Download');
 //asistencia
 Route::get('/asistencia',[ListaDocController::class,'index'])->middleware(['auth'])->name('Asistencia.Index');
-Route::get('/asistenciaDoc/{ciclo_escolar}/{grado}/{grupo}', [ListaDocController::class,'asistenciaword'])->middleware(['auth'])->name('Asistencia.Download');
+Route::get('/asistenciaDoc/{grado}/{grupo}', [ListaDocController::class,'asistenciaword'])->middleware(['auth'])->name('Asistencia.Download');
 require __DIR__ . '/auth.php';
