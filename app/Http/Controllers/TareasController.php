@@ -14,36 +14,71 @@ use App\Models\Periodos;
 use App\Models\Personal;
 use App\Models\Tareas;
 use Auth;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 class TareasController extends Controller
 {
 
+    /**
+     * @return Application|Factory|View
+     */
     public function index(){
         $maestro_id = Personal::where('usuario_id',Auth::user()->id)->first()->id;
         $clases = Clases::where('maestro_id',$maestro_id)->get();
-//        $array_clases = [];
-//        foreach ($clases as $item){
-//            foreach ($array_clases as $clase){
-//            if(in_array($item->asignatura_id,$array_clases,false))
-//            {
-//                array_push($array_clases, $item);
-//            }
-//            }
-//        }
-//        $array_clases = $clases;
-//        dd($array_clases);
         $periodos = Periodos::all();
+        $grupos = Grupos::all();
+        $filtrado = $this->super_unique($clases, 'asignatura_id');
+//        dd($filtrado);
         $tareas = Tareas::where('maestro_id',$maestro_id)->get();
-        return view('tareas.Index', compact('periodos', 'clases','tareas'));
+        return view('tareas.Index', compact('periodos', 'grupos','filtrado','tareas'));
     }
+
+    /**
+     * @param Request $request
+     * @return Application|Factory|View
+     */
+    public function filtro(Request $request){
+        $maestro_id = Personal::where('usuario_id',Auth::user()->id)->first()->id;
+        $clases = Clases::where('maestro_id',$maestro_id)->get();
+        $periodos = Periodos::all();
+        $grupos = Grupos::all();
+        $filtrado = $this->super_unique($clases, 'asignatura_id');
+//        dd($filtrado);
+        $tareas = Tareas::where('maestro_id',$maestro_id)
+            ->where('materia_id',$request->asignatura)
+            ->where('grado_id',$request->grado)
+            ->where('grupo_id',$request->grupo)
+            ->where('periodo_id',$request->periodo)
+            ->get();
+        return view('tareas.Index', compact('periodos', 'grupos','filtrado','tareas'));
+    }
+    function super_unique($array,$key)
+    {
+        $temp_array = [];
+        foreach ($array as &$v) {
+            if (!isset($temp_array[$v[$key]]))
+                $temp_array[$v[$key]] =& $v;
+        }
+        $array = array_values($temp_array);
+        return $array;
+
+    }
+
+    /**
+     * @return Application|Factory|View
+     */
     public function create()
     {
-        $periodos = Periodos::all();
         $maestro_id = Personal::where('usuario_id',Auth::user()->id)->first()->id;
-        $clases = Clases::where('maestro_id',$maestro_id);
+        $clases = Clases::where('maestro_id',$maestro_id)->get();
+        $periodos = Periodos::all();
+        $grupos = Grupos::all();
+        $filtrado = $this->super_unique($clases, 'asignatura_id');
         $ciclo = CicloEscolar::orderBy('fecha_inicio','asc')->first();
-        return view('tareas.Create', compact('periodos', 'clases','ciclo'));
+        return view('tareas.Create', compact('periodos', 'filtrado','grupos','ciclo'));
     }
 
     /**
@@ -65,7 +100,15 @@ class TareasController extends Controller
         $tarea->save();
         return $this->index();
     }
-    public function alumnoTarea($tarea,$grado,$grupo,$periodo){
+
+    /**
+     * @param $tarea
+     * @param $grado
+     * @param $grupo
+     * @param $periodo
+     * @return Application|Factory|View
+     */
+    public function alumnoTarea($tarea, $grado, $grupo, $periodo){
         $ciclo = CicloEscolar::orderBy('fecha_inicio','asc')->first()->id;
         $grupoAlumno = GrupoAlumno::where('grado_id',$grado)->where('grupo_id',$grupo)->where('ciclo_escolar_id',$ciclo)->get();
         $alumnos = [];
@@ -75,7 +118,15 @@ class TareasController extends Controller
         sort($alumnos);
         return view('tareas.Alumnos',compact('alumnos','tarea','grado','grupo','periodo','ciclo'));
     }
-    public function detailsTarea($tarea,$grado,$grupo,$periodo){
+
+    /**
+     * @param $tarea
+     * @param $grado
+     * @param $grupo
+     * @param $periodo
+     * @return Application|Factory|View
+     */
+    public function detailsTarea($tarea, $grado, $grupo, $periodo){
         $ciclo = CicloEscolar::orderBy('fecha_inicio','asc')->first()->id;
         $grupoAlumno = GrupoAlumno::where('grado_id',$grado)->where('grupo_id',$grupo)->where('ciclo_escolar_id',$ciclo)->get();
         $alumnos = [];
@@ -85,6 +136,11 @@ class TareasController extends Controller
         sort($alumnos);
         return view('tareas.Details',compact('alumnos','tarea','grado','grupo','periodo','ciclo'));
     }
+
+    /**
+     * @param Request $request
+     * @return Application|Factory|View
+     */
     public function storeAlumno(Request $request){
         $tareaMaestro = Tareas::find($request->tarea);
 

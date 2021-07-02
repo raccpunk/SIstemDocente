@@ -1,6 +1,6 @@
 <x-app-layout>
 <div class="container mt-4">
-    <div class="row">
+        <div class="row">
         <div class="text-center">
             <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="asignatura">Asignatura</label>
             <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="grado">Grado</label>
@@ -8,42 +8,39 @@
             <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="periodo">Periodos</label>
         </div>
     </div>
-{{--    <div class="alert alert-danger alert-dismissible fade show" id="alert" role="alert">--}}
-{{--        <strong>Holy guacamole!</strong> You should check in on some of those fields below.--}}
-{{--        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>--}}
-{{--    </div>--}}
+
     <div class="row">
         <div class="text-center">
-            <select class="col-md-2 mt-2 mr-5" name="asignatura" id="asignatura">
+            <form action="{{route('tareas.filtro')}}" method="POST">
+                @csrf
+            <select class=" wrapper col-md-2 mt-2 mr-5" name="asignatura" id="asignatura" required>
                 <option value="">selecciona...</option>
-                @foreach($clases as $item)
+                @foreach($filtrado as $item)
                     <option value="{{$item->asignatura_id}}">{{\App\Models\Asignaturas::find($item->asignatura_id)->nombre}}</option>
                 @endforeach
             </select>
-            <select class="col-md-2 mt-2 mr-5" name="grado" id="grado">
+            <select class=" wrapper col-md-2 mt-2 mr-5" name="grado" id="grado" required>
                 <option value="">selecciona...</option>
-                @foreach($clases as $item)
+                @foreach($filtrado as $item)
                     <option value="{{$item->grado_id}}">{{\App\Models\Grados::find($item->grado_id)->nombre_largo}}</option>
                 @endforeach
             </select>
-            <select class="col-md-2 mt-2 mr-5" name="grupo" id="grupo">
+            <select class=" wrapper col-md-2 mt-2 mr-5" name="grupo" id="grupo" required>
                 <option value="">selecciona...</option>
-                @foreach($clases as $item)
-                    <option value="{{$item->grupo_id}}">{{\App\Models\Grupos::find($item->grupo_id)->nombre}}</option>
+                @foreach($grupos as $item)
+                    <option value="{{$item->id}}">{{$item->nombre}}</option>
                 @endforeach
             </select>
-            <select class="col-md-2 mt-2 mr-5" name="periodo" id="periodo">
+            <select class="wrapper col-md-2 mt-2 mr-5" name="periodo" id="periodo" required>
                 <option value="">selecciona...</option>
                 @foreach($periodos as $item)
                     <option value="{{$item->id}}">{{$item->nombre}}</option>
                 @endforeach
             </select>
-{{--            <select class="col-md-2 mt-2 mr-5" name="ciclo_escolar" id="ciclo_escolar">--}}
-{{--               <option value="">selecciona...</option>--}}
-{{--                @foreach($ciclos as $item)--}}
-{{--                    <option value="{{$item->id}}">{{$item->nombre}}</option>--}}
-{{--                @endforeach--}}
-{{--            </select>--}}
+                <div class="mt-3 mb-3">
+                    <button class="btn btn-success" type="submit">Filtrar</button>
+                </div>
+        </form>
         </div>
     </div>
 </div>

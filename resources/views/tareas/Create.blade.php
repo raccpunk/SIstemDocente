@@ -30,9 +30,9 @@
             <label for="materia" class="col-form-label col-4">Materia</label>
             <select class="form-control" name="materia" required="required">
                 <option value="">selecciona...</option>
-                @foreach($asignaturas as $item)
-                    <option value="{{$item->id}}">{{$item->nombre}}</option>
-                @endforeach
+                @foreach($filtrado as $item)
+                    <option value="{{$item->asignatura_id}}">{{\App\Models\Asignaturas::find($item->asignatura_id)->nombre}}</option>
+            @endforeach
             </select>
         </div>
         <div class="form-group row">
@@ -48,9 +48,9 @@
             <label for="grado" class="col-form-label col-4">Grado</label>
             <select class="form-control" name="grado" required="required">
                 <option value="">selecciona...</option>
-                @foreach($grados as $item)
-                    <option value="{{$item->id}}">{{$item->nombre_largo}}</option>
-                @endforeach
+                @foreach($filtrado as $item)
+                    <option value="{{$item->grado_id}}">{{\App\Models\Grados::find($item->grado_id)->nombre_largo}}</option>
+            @endforeach
             </select>
         </div>
         <div class="form-group row">
