@@ -5,7 +5,7 @@
         @csrf
       	<div class="row">
         	<div class="col-8 offset-4">
-				<h2><center>Agregar Nueva Tarea<center></h2>
+				<h2><center>Agregar tarea<center></h2>
 			</div>
       	</div>
         <div class="form-group row">

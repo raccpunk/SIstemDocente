@@ -48,6 +48,7 @@
         <div class="col text-center">
             <a href="" class="btn btn-success ">Ver Tareas</a>
             <a href="{{ route('Tarea.Create') }}" class="btn btn-success ">Nueva Tarea</a>
+            <a href="{{ route('Tarea.Calif') }}" class="btn btn-success ">Descargar Calificaciones del periodo</a>
         </div>
     </div>
     <div class="container">
@@ -81,11 +82,16 @@
                         @if($tarea->isCaptured)
                             <td class="text-center">
                                 <a class="mr-2" href="{{url('/detailstask/'.$tarea->id).'/'.$tarea->grado_id.'/'.$tarea->grupo_id.'/'.$tarea->periodo_id.'/'.$tarea->ciclo_escolar_id}}" title="Ver detalles" ><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                <a class="mr-2" href="{{url('/studentstask/'.$tarea->id).'/'.$tarea->grado_id.'/'.$tarea->grupo_id.'/'.$tarea->periodo_id.'/'.$tarea->ciclo_escolar_id}}" title="Editar" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <a class="mr-2" href="{{url('/editstudentstask/'.$tarea->id).'/'.$tarea->grado_id.'/'.$tarea->grupo_id.'/'.$tarea->periodo_id.'/'.$tarea->ciclo_escolar_id}}" title="Editar calificaciones" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <a class="mr-2" href="{{url('/updatetask/'.$tarea->id)}}" title="Editar tarea" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                             </td>
 
                         @else
-                            <td class="text-center"><a href="{{url('/studentstask/'.$tarea->id).'/'.$tarea->grado_id.'/'.$tarea->grupo_id.'/'.$tarea->periodo_id.'/'.$tarea->ciclo_escolar_id}}" title="Capturar"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                            <td class="text-center">
+                                <a  class="mr-2" href="{{url('/studentstask/'.$tarea->id).'/'.$tarea->grado_id.'/'.$tarea->grupo_id.'/'.$tarea->periodo_id.'/'.$tarea->ciclo_escolar_id}}" title="Capturar"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <a class="mr-2" href="{{url('/updatetask/'.$tarea->id)}}" title="Editar tarea" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+
+                            </td>
                         @endif
                     </tr>
                 @endforeach
