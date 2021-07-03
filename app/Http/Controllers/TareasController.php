@@ -111,24 +111,31 @@ class TareasController extends Controller
      * @return Application|Factory|View
      */
     public function updateTask(Request $request){
-//        dd($request->all());
+//       dd($request->all());
         $tarea = Tareas::find($request->id);
         $tarea->nombre = $request->nombre;
         $tarea->descripcion = $request->descripcion;
         $tarea->valor = $request->valor;
-        $tarea->periodo_id = $request->periodo;
-        $tarea->grado_id = $request->grado;
-        $tarea->grupo_id = $request->grupo;
-        $tarea->materia_id = $request->materia;
-//        if ($tarea->isCaptured)
-//        {
-//
-//
-//        }
-//        else{
-            $tarea->save();
-//        }
+        $tarea->save();
         return $this->index();
+    }
+
+    public function destroy($tarea)
+    {
+        try {
+            if (Tareas::find($tarea)->isCaptured){
+                AlumnoTareas::where('tarea_id',$tarea)->delete();
+                Tareas::destroy($tarea);
+            }
+            else{
+                Tareas::destroy($tarea);
+            }
+            return $this->index();
+        }
+        catch(Exception $exception)
+        {
+            dd("Fail");
+        }
     }
 
     /**
@@ -199,13 +206,28 @@ class TareasController extends Controller
      * @return Application|Factory|View
      */
     public function viewEditStudentTask($tarea, $grado, $grupo, $periodo){
-        return view('tareas.Alumnos.Update');
+        $ciclo = CicloEscolar::orderBy('fecha_inicio','asc')->first()->id;
+        $grupoAlumno = GrupoAlumno::where('grado_id',$grado)->where('grupo_id',$grupo)->where('ciclo_escolar_id',$ciclo)->get();
+        $alumnos = [];
+        foreach ($grupoAlumno as $item){
+            array_push($alumnos, Alumnos::where('id',$item->alumno_id)->first());
+        }
+        sort($alumnos);
+        return view('tareas.AlumnosUpdate',compact('tarea','alumnos'));
     }
 
     /**
      * @return Application|Factory|View
      */
     public function editStudentTask(Request $request){
+        $tareaMaestro = Tareas::find($request->tarea);
+
+        foreach ($request->Alumnos['calif'] as $key=>$calif)
+        {
+            $alumnoTarea = AlumnoTareas::where('tarea_id',$request->tarea)->where('alumno_id',$request->Alumnos['id'][$key])->first();
+            $alumnoTarea->calificacion = $calif;
+            $alumnoTarea->save();
+        }
         return $this->index();
     }
 

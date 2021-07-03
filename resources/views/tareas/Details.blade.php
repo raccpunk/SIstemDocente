@@ -5,7 +5,7 @@
     <div class="table-responsive m-5">
         <form action="{{route('Tarea.postAlumnos')}}" method="POST">
             @csrf
-        <table class="table">
+        <table id="dtDynamicVerticalScrollExample" class="table">
             <thead class="text-center table-dark">
             <tr>
                 <th>#</th>

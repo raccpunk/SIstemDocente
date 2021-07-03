@@ -1,9 +1,23 @@
 <x-app-layout>
+    <style>
+        table.dataTable thead .sorting:after,
+        table.dataTable thead .sorting:before,
+        table.dataTable thead .sorting_asc:after,
+        table.dataTable thead .sorting_asc:before,
+        table.dataTable thead .sorting_asc_disabled:after,
+        table.dataTable thead .sorting_asc_disabled:before,
+        table.dataTable thead .sorting_desc:after,
+        table.dataTable thead .sorting_desc:before,
+        table.dataTable thead .sorting_desc_disabled:after,
+        table.dataTable thead .sorting_desc_disabled:before {
+            bottom: .5em;
+        }
+    </style>
     <div class="row text-center mt-4">
-        <h2>Captura de calificaciones de la tarea {{\App\Models\Tareas::find($tarea)->nombre}}</h2>
+        <h2>Editar calificaciones de la tarea "{{\App\Models\Tareas::find($tarea)->nombre}}"</h2>
     </div>
    <div class="container">
-       <div class="table-responsive m-5">
+       <div class="table-responsive ">
            <form action="{{route('Tarea.postAlumnos')}}" method="POST">
                @csrf
                <table id="dtDynamicVerticalScrollExample" class="table">
@@ -19,12 +33,8 @@
                        <tr>
                            <td>{{$key + 1}}</td>
                            <td><input  type="hidden" name="Alumnos[id][]" value="{{$alumno->id}}">{{$alumno->apellido_paterno.' '.$alumno->apellido_materno.' '.$alumno->nombres}}</td>
-                           <td><input type="text" class="form-control-md" name="Alumnos[calif][]"></td>
-                           <input type="hidden" name="grupo" value="{{$grupo}}">
-                           <input type="hidden" name="grado" value="{{$grado}}">
-                           <input type="hidden" name="ciclo_escolar" value="{{$ciclo}}">
+                           <td><input type="text" class="form-control-md" name="Alumnos[calif][]" value="{{\App\Models\AlumnoTareas::where('tarea_id',$tarea)->where('alumno_id',$alumno->id)->first()->calificacion}}"></td>
                            <input type="hidden" name="tarea" value="{{$tarea}}">
-                           <input type="hidden" name="periodo" value="{{$periodo}}">
                        </tr>
                    @endforeach
                    </tbody>
@@ -33,5 +43,6 @@
            </form>
        </div>
    </div>
+
 </x-app-layout>
 

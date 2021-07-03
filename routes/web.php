@@ -35,6 +35,8 @@ Route::get('/editstudentstask/{tarea}/{grado}/{grupo}/{periodo}/{ciclo}',[Tareas
 Route::post('/editstudenttaskpost',[TareasController::class,'editStudentTask'])->middleware(['auth'])->name('Tarea.postAlumnos');
 //Vista de detalles de una tarea
 Route::get('/detailstask/{tarea}/{grado}/{grupo}/{periodo}/{ciclo}',[TareasController::class,'detailsTarea'])->middleware(['auth']);
+//Eliminar tarea
+Route::get('/deletetask/{tarea}',[TareasController::class,'destroy'])->middleware(['auth']);
 //Vista de descargar tareas por periodo
 Route::get('/tareascalif', [TareasController::class,'viewTaskCalif'])->middleware(['auth'])->name('Tarea.Calif');
 //Descargar calificaciones
