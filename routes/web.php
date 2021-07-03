@@ -28,7 +28,7 @@ Route::post('/updatetaskpost/}', [TareasController::class,'updateTask'])->middle
 //Vista de Captura de calificaciones de una tarea
 Route::get('/studentstask/{tarea}/{grado}/{grupo}/{periodo}/{ciclo}',[TareasController::class,'alumnoTarea'])->middleware(['auth']);
 //Capturar calificaciones
-Route::post('/studenttaskpost',[TareasController::class,'storeAlumno'])->middleware(['auth'])->name('Tarea.postAlumnos');
+Route::post('/studenttaskpost',[TareasController::class,'storeAlumno'])->middleware(['auth'])->name('Tarea.Alumnos');
 //Vista de editar calificaciones de una tarea
 Route::get('/editstudentstask/{tarea}/{grado}/{grupo}/{periodo}/{ciclo}',[TareasController::class,'viewEditStudentTask'])->middleware(['auth']);
 //Editar calificaciones de una tarea
