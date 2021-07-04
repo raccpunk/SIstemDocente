@@ -18,7 +18,11 @@
                 <tr>
                     <td>{{$key + 1}}</td>
                     <td><input  type="hidden" name="Alumnos[id][]" value="{{$alumno->id}}">{{$alumno->apellido_paterno.' '.$alumno->apellido_materno.' '.$alumno->nombres}}</td>
+                    @if(isset(\App\Models\AlumnoTareas::where('alumno_id',$alumno->id)->where('tarea_id',$tarea)->first()->calificacion))
                     <td><input type="text" class="form-control-md" value="{{\App\Models\AlumnoTareas::where('alumno_id',$alumno->id)->where('tarea_id',$tarea)->first()->calificacion}}" name="Alumnos[calif][]" readonly></td>
+                    @else
+                        <td><input type="text" class="form-control-md" value="0" name="Alumnos[calif][]" readonly></td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>

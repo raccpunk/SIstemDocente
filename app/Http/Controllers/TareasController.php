@@ -224,9 +224,9 @@ class TareasController extends Controller
 
         foreach ($request->Alumnos['calif'] as $key=>$calif)
         {
-            $alumnoTarea = AlumnoTareas::where('tarea_id',$request->tarea)->where('alumno_id',$request->Alumnos['id'][$key])->first();
-            $alumnoTarea->calificacion = $calif;
-            $alumnoTarea->save();
+           $alumnoTarea = AlumnoTareas::where('tarea_id',$request->tarea)->where('alumno_id',$request->Alumnos['id'][$key])->first();
+           $alumnoTarea->calificacion = $calif;
+           $alumnoTarea->save();
         }
         return $this->index();
     }
