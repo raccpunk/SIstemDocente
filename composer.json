@@ -12,7 +12,9 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
-        "phpoffice/phpword": "dev-master"
+        "laravelcollective/html": "^6.2",
+        "phpoffice/phpword": "dev-master",
+        "spatie/laravel-permission": "^4.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",

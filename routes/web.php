@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\ListaDocController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TareasController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 $path = "App/Http/Controllers/";
@@ -40,11 +43,17 @@ Route::get('/detailstask/{tarea}/{grado}/{grupo}/{periodo}/{ciclo}', [TareasCont
 Route::get('/deletetask/{tarea}', [TareasController::class, 'destroy'])->middleware(['auth']);
 //Vista de descargar tareas por periodo
 Route::get('/tareascalif', [TareasController::class, 'viewTaskCalif'])->middleware(['auth'])->name('Tarea.Calif');
-//Descargar calificaciones
-Route::get('/taskcalifpost/{tarea}/{ciclo_escolar}/{grado}/{grupo}/{periodo}', [TareasController::class, 'downloadTasksDoc'])->middleware(['auth'])->name('Tarea.Calif.Post');
+//Descargar calificaciones del periodo
+Route::get('/taskcalifperiod/{asignatura}/{grado}/{grupo}/{periodo}', [TareasController::class, 'downloadTasksDoc'])->middleware(['auth']);
 //Vista de lista de asistencia
 Route::get('/asistencia', [ListaDocController::class, 'index'])->middleware(['auth'])->name('Asistencia.Index');
 //Descargar lista de asistencia
 Route::get('/asistenciaDoc/{grado}/{grupo}', [ListaDocController::class, 'asistenciaword'])->middleware(['auth'])->name('Asistencia.Download');
+
+Route::resource('permissions', PermissionController::class)->middleware(['auth']);
+Route::resource('roles', RoleController::class)->middleware(['auth']);
+Route::resource('users',UserController::class)->middleware(['auth']);
+
 //Archivo de rutas de usuario
 require __DIR__ . '/auth.php';
+

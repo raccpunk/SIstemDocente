@@ -1,4 +1,3 @@
-
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,15 +15,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Home') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('Tarea.Index')" :active="request()->routeIs('Tarea.Index')">
-                        {{ __('Tareas') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('Asistencia.Index')" :active="request()->routeIs('Asistencia.Index')">
-                        {{ __('Lista de asistencia') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('permissions.index')" :active="request()->routeIs('permissions.index')">
-                        {{ __('permisos') }}
-                    </x-nav-link>
+{{--                    <x-nav-link :href="route('Tarea.Index')" :active="request()->routeIs('Tarea.Index')">--}}
+{{--                        {{ __('Tareas') }}--}}
+{{--                    </x-nav-link>--}}
+{{--                    <x-nav-link :href="route('Asistencia.Index')" :active="request()->routeIs('Asistencia.Index')">--}}
+{{--                        {{ __('Lista de asistencia') }}--}}
+{{--                    </x-nav-link>--}}
                 </div>
             </div>
 
@@ -49,7 +45,7 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                                             onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -76,10 +72,10 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-{{--            <a href="#" class="navbar-brand">Escuela Secundaria <b>Fray Diego De Landa</b></a>--}}
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            {{--            <a href="#" class="navbar-brand">Escuela Secundaria <b>Fray Diego De Landa</b></a>--}}
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -95,7 +91,7 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                                           onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>

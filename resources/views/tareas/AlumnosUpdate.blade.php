@@ -35,8 +35,14 @@
                             <td><input type="hidden" name="Alumnos[id][]"
                                        value="{{$alumno->id}}">{{$alumno->apellido_paterno.' '.$alumno->apellido_materno.' '.$alumno->nombres}}
                             </td>
-                            <td><input type="text" class="form-control-md" name="Alumnos[calif][]" required
-                                       value="{{\App\Models\AlumnoTareas::where('tarea_id',$tarea)->where('alumno_id',$alumno->id)->first()->calificacion}}">
+                            <td>
+                                @if(\App\Models\AlumnoTareas::where('tarea_id',$tarea)->where('alumno_id',$alumno->id)->first() !== null)
+                                    <input type="text" class="form-control-md" name="Alumnos[calif][]" required
+                                           value="{{\App\Models\AlumnoTareas::where('tarea_id',$tarea)->where('alumno_id',$alumno->id)->first()->calificacion}}">
+                                @else
+                                    <input type="text" class="form-control-md" name="Alumnos[calif][]" required
+                                           value="0">
+                                @endif
                             </td>
                             <input type="hidden" name="tarea" value="{{$tarea}}">
                         </tr>
@@ -47,6 +53,4 @@
             </form>
         </div>
     </div>
-
 </x-app-layout>
-

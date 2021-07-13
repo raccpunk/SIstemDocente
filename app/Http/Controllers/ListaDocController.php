@@ -7,6 +7,10 @@ use App\Models\Grados;
 use App\Models\Grupos;
 use App\Models\ListaDoc;
 use Illuminate\Http\Request;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\SimpleType\JcTable;
+
 class ListaDocController extends Controller
 {
     public function index()
@@ -18,7 +22,7 @@ class ListaDocController extends Controller
 
     public function asistenciaword($grado,$grupo)
     {
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord = new PhpWord();
         $section = $phpWord->addSection(array('orientation' => 'landscape'));
         $fontStyleName = 'oneUserDefinedStyle';
         $phpWord->addFontStyle(
@@ -54,10 +58,8 @@ class ListaDocController extends Controller
 
 
         $fancyTableStyleName = 'Prueba Con Tablas';
-        $fancyTableStyle = array('borderSize' => 5, 'borderColor' => '000000', 'cellMargin' => 0, 'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 0);
+        $fancyTableStyle = array('borderSize' => 5, 'borderColor' => '000000', 'cellMargin' => 0, 'alignment' => JcTable::CENTER, 'cellSpacing' => 0);
         $fancyTableFirstRowStyle = array('borderBottomSize' => 5, 'borderBottomColor' => '000000');
-        $fancyTableCellStyle = array('valign' => 'center');
-        $fancyTableFontStyle = array('bold' => true);
         $phpWord->addTableStyle($fancyTableStyleName, $fancyTableStyle, $fancyTableFirstRowStyle);
         $table = $section->addTable($fancyTableStyleName);
 
@@ -128,7 +130,7 @@ class ListaDocController extends Controller
             $table->addCell(500)->addText(' ');
         }
         //create doc
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save('Asistencia.docx');
 
         //download doc and delete after send

@@ -13,43 +13,41 @@
             Todos los campos son requeridos
         </div>
         <div class="row">
-                <div class="col text-center">
-                    <select class="col-md-3 mt-2 mr-5" name="grado" id="grado">
-                        <option value="">selecciona...</option>
-                        @foreach($grados as $item)
-                            <option value="{{$item->id}}">{{$item->nombre_largo}}</option>
-                        @endforeach
-                    </select>
-                    <select class="col-md-3 mt-2 mr-5" name="grupo" id="grupo">
-                        <option value="">selecciona...</option>
-                        @foreach($grupos as $item)
-                            <option value="{{$item->id}}">{{$item->nombre}}</option>
-                        @endforeach
-                    </select>
-                    <br>
-                    <br>
-                    <button id="button" class="btn btn-success ">Descargar Lista de asistencia</button>
-                </div>
+            <div class="col text-center">
+                <select class="col-md-3 mt-2 mr-5" name="grado" id="grado">
+                    <option value="">selecciona...</option>
+                    @foreach($grados as $item)
+                        <option value="{{$item->id}}">{{$item->nombre_largo}}</option>
+                    @endforeach
+                </select>
+                <select class="col-md-3 mt-2 mr-5" name="grupo" id="grupo">
+                    <option value="">selecciona...</option>
+                    @foreach($grupos as $item)
+                        <option value="{{$item->id}}">{{$item->nombre}}</option>
+                    @endforeach
+                </select>
+                <br>
+                <br>
+                <button id="button" class="btn btn-success ">Descargar Lista de asistencia</button>
+            </div>
         </div>
     </div>
-    <script type="application/javascript">
-        let button = document.getElementById('button');
-        var alert = document.getElementById('alert');
-        alert.style.visibility = 'hidden';
-        button.addEventListener('click',function () {
-            let grado = document.getElementById('grado').value;
-            let grupo = document.getElementById('grupo').value;
-            console.log(grado)
-
-            if(grado !== '' && grupo !== ''){
-                alert.style.visibility = 'hidden';
-                url = `http://${window.location.host}/asistenciaDoc/${grado}/${grupo}`;
-                window.open(url)
-            }
-            else{
-                alert.style.visibility = 'visible';
-            }
-        });
-
-    </script>
 </x-app-layout>
+<script type="application/javascript">
+    let button = document.getElementById('button');
+    var alert = document.getElementById('alert');
+    alert.style.visibility = 'hidden';
+    button.addEventListener('click', function () {
+        let grado = document.getElementById('grado').value;
+        let grupo = document.getElementById('grupo').value;
+        console.log(grado)
+
+        if (grado !== '' && grupo !== '') {
+            alert.style.visibility = 'hidden';
+            url = `http://${window.location.host}/asistenciaDoc/${grado}/${grupo}`;
+            window.open(url)
+        } else {
+            alert.style.visibility = 'visible';
+        }
+    });
+</script>

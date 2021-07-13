@@ -48,7 +48,7 @@
         <div class="col text-center">
             <a href="" class="btn btn-success ">Ver Tareas</a>
             <a href="{{ route('Tarea.Create') }}" class="btn btn-success ">Nueva Tarea</a>
-            <a href="{{ route('Tarea.Calif') }}" class="btn btn-success " hidden>Descargar Calificaciones del periodo</a>
+            <a href="{{ route('Tarea.Calif') }}" class="btn btn-success ">Descargar Calificaciones del periodo</a>
         </div>
     </div>
     <div class="container">
