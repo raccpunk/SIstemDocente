@@ -36,7 +36,15 @@
                                             </tr>
                                             <tr>
                                                 <th>Roles</th>
-                                                <td></td>
+                                                <td>
+                                                    @foreach($roles as $id=>$role)
+                                                        <label for="" class="col-sm-2 col-form-label">{{$role}}
+                                                            <input type="checkbox" name="roles[]"
+                                                                   value="{{$id}}"
+                                                                   {{ $user->roles->contains($id) ? 'checked' : '' }} onclick="javascript: return false;">
+                                                        </label>
+                                                    @endforeach
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>Created at</th>
@@ -49,7 +57,8 @@
                                         <div class="button-container">
                                             <a href="{{ route('users.index') }}"
                                                class="btn btn-sm btn-success mr-3"> Volver </a>
-                                            <a href="{{ route('users.edit',$user->id) }}" class="btn btn-sm btn-primary"> Editar </a>
+                                            <a href="{{ route('users.edit',$user->id) }}"
+                                               class="btn btn-sm btn-primary"> Editar </a>
                                         </div>
                                     </div>
                                 </div>

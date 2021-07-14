@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ListaDocController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TareasController;
 use App\Http\Controllers\UserController;
@@ -53,6 +54,7 @@ Route::get('/asistenciaDoc/{grado}/{grupo}', [ListaDocController::class, 'asiste
 Route::resource('permissions', PermissionController::class)->middleware(['auth']);
 Route::resource('roles', RoleController::class)->middleware(['auth']);
 Route::resource('users',UserController::class)->middleware(['auth']);
+Route::resource('personal',PersonalController::class)->middleware(['auth']);
 
 //Archivo de rutas de usuario
 require __DIR__ . '/auth.php';

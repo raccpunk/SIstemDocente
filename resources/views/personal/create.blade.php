@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <form action="{{ route('users.store') }}" method="post" class="form-horizontal">
+                    <form action="{{ route('personal.store') }}" method="post" class="form-horizontal">
                         @csrf
                         <div class="card">
                             <div class="card-header card-header-primary">
@@ -12,47 +12,49 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <label for="username" class="col-sm-2 col-form-label">Nombres</label>
+                                    <label for="" class="col-sm-2 col-form-label">Nombres</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="username"
-                                               placeholder="Ingrese su nombre de usuario" value="{{ old('username') }}">
-                                        @if ($errors->has('username'))
-                                            <span class="error text-danger"
-                                                  for="input-username">{{ $errors->first('username') }}</span>
-                                        @endif
+                                        <input type="text" class="form-control" name="nombres" required>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label for="email" class="col-sm-2 col-form-label">Correo</label>
+                                    <label for="" class="col-sm-2 col-form-label">Apellidos</label>
                                     <div class="col-sm-7">
-                                        <input type="email" class="form-control" name="email"
-                                               placeholder="Ingrese su correo" value="{{ old('email') }}">
-                                        @if ($errors->has('email'))
-                                            <span class="error text-danger"
-                                                  for="input-email">{{ $errors->first('email') }}</span>
-                                        @endif
+                                        <input type="text" class="form-control" name="apellidos" required>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label for="password" class="col-sm-2 col-form-label">Contraseña</label>
+                                    <label for="" class="col-sm-2 col-form-label">Telefono</label>
                                     <div class="col-sm-7">
-                                        <input type="password" class="form-control" name="password"
-                                               placeholder="Contraseña">
-                                        @if ($errors->has('password'))
-                                            <span class="error text-danger"
-                                                  for="input-password">{{ $errors->first('password') }}</span>
-                                        @endif
+                                        <input type="text" class="form-control" name="telefono" maxlength="10" required>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <select name="usuario_id" class="form-select form-select-lg form-control mt-5" required>
+                                            <option value="">selecciona un usuario</option>
+                                        @foreach($users as $id=>$user)
+                                            <option value="{{$id}}">{{$user}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <select name="puesto_id" class="form-select form-select-lg form-control mt-5" required>
+                                        <option value="">selecciona un puesto</option>
+                                        @foreach($puestos as $id=>$puesto)
+                                            <option value="{{$id}}">{{$puesto}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <select name="institucion_id" class="form-select form-select-lg form-control mt-5" required>
+                                        <option value="">selecciona una institucion</option>
+                                        @foreach($instituciones as $id=>$institucion)
+                                            <option value="{{$id}}">{{$institucion}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <hr>
-                                <div class="row">
-                                    <label for="">Roles:</label>
-                                    @foreach($roles as $role)
-                                        <label for="" class="col-sm-2 col-form-label">{{$role->name}}
-                                            <input type="checkbox" name="roles[]" id="" value="{{$role->id}}">
-                                        </label>
-                                    @endforeach
-                                </div>
+                                <input type="hidden" name="status_id" value="1">
                             </div>
                             <!--Footer-->
                             <div class="card-footer ml-auto mr-auto">

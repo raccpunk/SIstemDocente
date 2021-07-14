@@ -44,7 +44,7 @@
                                     <label for="">Roles:</label>
                                     @foreach($roles as $role)
                                         <label for="" class="col-sm-2 col-form-label">{{$role->name}}
-                                            <input type="checkbox" name="roles[]" id="" value="{{$role->id}}">
+                                            <input type="checkbox" name="roles[]" value="{{$role->id}}" {{ $user->roles->contains($role->id) ? 'checked' : '' }}>
                                         </label>
                                     @endforeach
                                 </div>

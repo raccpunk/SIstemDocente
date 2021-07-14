@@ -52,7 +52,8 @@ class UserController extends Controller
 
     public function show(User $user): Factory|View|Application
     {
-        return view('users.show', compact('user'));
+        $roles = Role::all()->pluck('name','id');
+        return view('users.show', compact('user','roles'));
     }
 
     /**

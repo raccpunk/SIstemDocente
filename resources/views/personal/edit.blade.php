@@ -8,7 +8,7 @@
                         @method('PUT')
                         <div class="card">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title">Usuario</h4>
+                                <h4 class="card-title">Personal</h4>
                                 <p class="card-category">Editar datos</p>
                             </div>
                             <div class="card-body">
@@ -40,14 +40,6 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row">
-                                    <label for="">Roles:</label>
-                                    @foreach($roles as $role)
-                                        <label for="" class="col-sm-2 col-form-label">{{$role->name}}
-                                            <input type="checkbox" name="roles[]" id="" value="{{$role->id}}">
-                                        </label>
-                                    @endforeach
-                                </div>
                             </div>
                             <!--Footer-->
                             <div class="card-footer ml-auto mr-auto">

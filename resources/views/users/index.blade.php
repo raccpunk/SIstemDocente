@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container">
+    <div class="container mt-2">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -30,13 +30,17 @@
                                             <th>Correo</th>
                                             <th>Username</th>
                                             <th>Created_at</th>
-                                            <th class="text-right">Acciones</th>
+                                            <th class="text-right">Roles</th>
                                             </thead>
                                             <tbody>
                                             @foreach ($users as $user)
                                                 <tr>
                                                     <td>{{ $user->id }}</td>
-                                                    <td>{{ $user->name }}</td>
+                                                    <td>
+                                                        <span class="{{$user->person ? '' : 'badge bg-danger'}}">
+                                                            {{ $user->person ? $user->person->nombres : 'personal no asignado' }}
+                                                        </span>
+                                                    </td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>{{ $user->username }}</td>
                                                     <td>{{ $user->created_at }}</td>
@@ -45,7 +49,7 @@
                                                             <span
                                                                 class="badge badge-info bg-primary">{{ $role->name }}</span>
                                                         @empty
-                                                            <span class="badge bg-danger">No role added</span>
+                                                            <span class="badge bg-danger">rol no asignado</span>
                                                         @endforelse
                                                     </td>
                                                     <td class="td-actions text-right">

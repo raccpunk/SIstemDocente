@@ -39,8 +39,10 @@
                                                                                    type="checkbox" name="permissions[]"
                                                                                    value="{{ $id }}" {{ $role->permissions->contains($id) ? 'checked' : '' }}>
                                                                             <span class="form-check-sign">
-                                      <span class="check" value=""></span>
-                                    </span>
+                                                                                <span class="check" value="">
+
+                                                                                </span>
+                                                                            </span>
                                                                         </label>
                                                                     </div>
                                                                 </td>

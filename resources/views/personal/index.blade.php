@@ -7,8 +7,8 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header card-header-primary">
-                                    <h4 class="card-title">Usuarios</h4>
-                                    <p class="card-category">Usuarios registrados</p>
+                                    <h4 class="card-title">Personal</h4>
+                                    <p class="card-category">Personal registrado</p>
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -18,43 +18,37 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            <a href="{{ route('users.create') }}" class="btn btn-sm btn-success">Añadir
-                                                usuario</a>
+                                            <a href="{{ route('personal.create') }}" class="btn btn-sm btn-success">Añadir
+                                                personal</a>
                                         </div>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="text-primary">
                                             <th>ID</th>
-                                            <th>Nombre</th>
-                                            <th>Correo</th>
+                                            <th>Nombres</th>
+                                            <th>Apellidos</th>
+                                            <th>Puesto</th>
                                             <th>Username</th>
                                             <th>Created_at</th>
                                             <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
-                                            @foreach ($users as $user)
+                                            @foreach ($personal as $person)
                                                 <tr>
-                                                    <td>{{ $user->id }}</td>
-                                                    <td>{{ $user->name }}</td>
-                                                    <td>{{ $user->email }}</td>
-                                                    <td>{{ $user->username }}</td>
-                                                    <td>{{ $user->created_at }}</td>
-                                                    <td>
-                                                        @forelse ($user->roles as $role)
-                                                            <span
-                                                                class="badge badge-info bg-primary">{{ $role->name }}</span>
-                                                        @empty
-                                                            <span class="badge bg-danger">No role added</span>
-                                                        @endforelse
-                                                    </td>
+                                                    <td>{{ $person->id }}</td>
+                                                    <td>{{ $person->nombres }}</td>
+                                                    <td>{{ $person->apellidos }}</td>
+                                                    <td>{{ $person->puesto->funcion }}</td>
+                                                    <td>{{ $person->user->username }}</td>
+                                                    <td>{{ $person->created_at }}</td>
                                                     <td class="td-actions text-right">
-                                                        <a href="{{ route('users.show', $user->id) }}"
+                                                        <a href="{{ route('personal.show', $person->id) }}"
                                                            class="btn btn-info"><i class="material-icons">person</i></a>
-                                                        <a href="{{ route('users.edit', $user->id) }}"
+                                                        <a href="{{ route('personal.edit', $person->id) }}"
                                                            class="btn btn-warning"><i
                                                                 class="material-icons">edit</i></a>
-                                                        <form action="{{ route('users.destroy', $user->id) }}"
+                                                        <form action="{{ route('personal.destroy', $person->id) }}"
                                                               method="POST" style="display: inline-block;"
                                                               onsubmit="return confirm('Seguro?')">
                                                             @csrf
@@ -71,7 +65,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    {{ $users->links() }}
+                                    {{ $personal->links() }}
                                 </div>
                             </div>
                         </div>
