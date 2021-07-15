@@ -40,17 +40,17 @@ class TareasController extends Controller
         $periodos = Periodos::all();
         $grupos = clases::select('grupo_id')
             ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
-            ->where('maestro_id',$maestro_id)
+            ->where('maestro_id', $maestro_id)
             ->distinct()
             ->get();
         $grados = clases::select('grado_id')
             ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
-            ->where('maestro_id',$maestro_id)
+            ->where('maestro_id', $maestro_id)
             ->distinct()
             ->get();
         $filtrado = $this->super_unique($clases, 'asignatura_id');
         $tareas = Tareas::where('maestro_id', $maestro_id)->get();
-        return view('tareas.Index', compact('periodos', 'grupos', 'filtrado', 'grados','tareas'));
+        return view('tareas.Index', compact('periodos', 'grupos', 'filtrado', 'grados', 'tareas'));
     }
 
     /**
@@ -64,12 +64,12 @@ class TareasController extends Controller
         $periodos = Periodos::all();
         $grupos = clases::select('grupo_id')
             ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
-            ->where('maestro_id',$maestro_id)
+            ->where('maestro_id', $maestro_id)
             ->distinct()
             ->get();
         $grados = clases::select('grado_id')
             ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
-            ->where('maestro_id',$maestro_id)
+            ->where('maestro_id', $maestro_id)
             ->distinct()
             ->get();
         $filtrado = $this->super_unique($clases, 'asignatura_id');
@@ -79,7 +79,7 @@ class TareasController extends Controller
             ->where('grupo_id', $request->grupo)
             ->where('periodo_id', $request->periodo)
             ->get();
-        return view('tareas.Index', compact('periodos', 'grupos','grados','filtrado', 'tareas'));
+        return view('tareas.Index', compact('periodos', 'grupos', 'grados', 'filtrado', 'tareas'));
     }
 
     /**
@@ -92,17 +92,17 @@ class TareasController extends Controller
         $periodos = Periodos::all();
         $grupos = clases::select('grupo_id')
             ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
-            ->where('maestro_id',$maestro_id)
+            ->where('maestro_id', $maestro_id)
             ->distinct()
             ->get();
         $grados = clases::select('grado_id')
             ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
-            ->where('maestro_id',$maestro_id)
+            ->where('maestro_id', $maestro_id)
             ->distinct()
             ->get();
         $filtrado = $this->super_unique($clases, 'asignatura_id');
         $ciclo = CicloEscolar::orderBy('fecha_inicio', 'asc')->first();
-        return view('tareas.Create', compact('periodos', 'filtrado', 'grados','grupos', 'ciclo'));
+        return view('tareas.Create', compact('periodos', 'filtrado', 'grados', 'grupos', 'ciclo'));
     }
 
     /**
@@ -137,19 +137,19 @@ class TareasController extends Controller
         $periodos = Periodos::all();
         $grupo = clases::select('grupo_id')
             ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
-            ->where('maestro_id',$maestro_id)
+            ->where('maestro_id', $maestro_id)
             ->distinct()
             ->get();
         $grados = clases::select('grado_id')
             ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
-            ->where('maestro_id',$maestro_id)
+            ->where('maestro_id', $maestro_id)
             ->distinct()
             ->get();
 //        dd($grados,$grupo);
         $filtrado = $this->super_unique($clases, 'asignatura_id');
         $ciclo = CicloEscolar::orderBy('fecha_inicio', 'asc')->first();
         $tareas = Tareas::find($tarea);
-        return view('tareas.update', compact('tareas', 'periodos', 'filtrado','grados', 'grupo', 'ciclo'));
+        return view('tareas.update', compact('tareas', 'periodos', 'filtrado', 'grados', 'grupo', 'ciclo'));
     }
 
     /**
@@ -299,9 +299,19 @@ class TareasController extends Controller
         $maestro_id = Personal::where('usuario_id', Auth::user()->id)->first()->id;
         $clases = Clases::where('maestro_id', $maestro_id)->get();
         $periodos = Periodos::all();
-        $grupos = Grupos::all();
+        $grupos = clases::select('grupo_id')
+            ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
+            ->where('maestro_id', $maestro_id)
+            ->distinct()
+            ->get();
+        $grados = clases::select('grado_id')
+            ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
+            ->where('maestro_id', $maestro_id)
+            ->distinct()
+            ->get();
+//        dd($grados,$grupo);
         $filtrado = $this->super_unique($clases, 'asignatura_id');
-        return view('tareas.CalificacionesPeridoo', compact('filtrado', 'periodos', 'grupos'));
+        return view('tareas.CalificacionesPeridoo', compact('filtrado', 'periodos', 'grados', 'grupos'));
     }
 
     public function viewCalifPeriod()
@@ -343,6 +353,8 @@ class TareasController extends Controller
         );
         $nombre_asignatura = Asignaturas::find($asignatura)->nombre;
         $nombre_periodo = Periodos::find($periodo)->nombre;
+        $fechaComoEntero = strtotime(Periodos::find($periodo)->fecha_inicio);
+        $mesperiodo = strftime('%b', $fechaComoEntero);
         $maestro = Personal::where('usuario_id', Auth::user()->id)->first();
         $nombre_maestro = $maestro->nombres . ' ' . $maestro->apellidos;
         $nombre_ciclo = CicloEscolar::orderBy('fecha_inicio', 'asc')->first()->nombre;
@@ -351,7 +363,7 @@ class TareasController extends Controller
 //head document
         $section->addText('                                                                       ' . $nombre_ciclo, $header);
         $section->addText('                                                                                               PROF:' . $nombre_maestro . '   ASIGNATURA:' . $nombre_asignatura . '', $fontStyleName);
-        $section->addText('                                                                                               MES:___________________________  PERIODO:' . $nombre_periodo . ' GRUPO:' . $nombre_grado . $nombre_grupo, $fontStyleName);
+        $section->addText('                                                                                               MES:' . $mesperiodo . '  PERIODO:' . $nombre_periodo . ' GRUPO:' . $nombre_grado . $nombre_grupo, $fontStyleName);
         $section->addText(' ');
 
 
