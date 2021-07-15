@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Alumnos;
+use App\Models\Alumno;
 use App\Models\CicloEscolar;
 use App\Models\Grados;
 use App\Models\Grupos;
@@ -31,8 +31,6 @@ class ListaDocController extends Controller
         );
         $header = array('size' => 14, 'bold' => true,'align'=>'both');
         $nature = array('size' => 11, 'bold' => true);
-        $nature2 = array('size' => 9, 'bold' => false);
-        $path = 'App\\';
         $sources = file_get_contents(__DIR__.'/img/imgdoc.png',true);
         $section->addImage(
             $sources,
@@ -64,9 +62,9 @@ class ListaDocController extends Controller
         $table = $section->addTable($fancyTableStyleName);
 
         //get alumnos
-        $alumnos = Alumnos::select('*')
+        $alumnos = Alumno::select('*')
             ->join('grupo_alumnos','grupo_alumnos.alumno_id','=','alumnos.id')
-            ->where('grupo_alumnos.ciclo_escolar_id','=',$ciclo_escolar)
+            ->where('grupo_alumnos.ciclo_escolar_id','=',$ciclo_escolar->id)
             ->where('grupo_id','=',$grupo)
             ->where('grado_id','=',$grado)->orderBy('apellido_paterno','asc')->get();
         //head table

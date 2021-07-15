@@ -5,7 +5,10 @@
             @csrf
             <div class="row">
                 <div class="col-8 offset-4">
-                    <h2><center>Editar Tarea<center></h2>
+                    <h2>
+                        <center>Editar Tarea
+                            <center>
+                    </h2>
                 </div>
             </div>
             <input type="hidden" name="id" value="{{$tareas->id}}">
@@ -13,19 +16,22 @@
             <div class="form-group row">
                 <label class="col-form-label col-4">Nombre</label>
                 <div class="col-8">
-                    <input value="{{$tareas->nombre}}" type="text" class="form-control" name="nombre" required="required">
+                    <input value="{{$tareas->nombre}}" type="text" class="form-control" name="nombre"
+                           required="required">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-form-label col-4">Descripción</label>
                 <div class="col-8">
-                    <input value="{{$tareas->descripcion}}" type="text" class="form-control" name="descripcion" required="required">
+                    <input value="{{$tareas->descripcion}}" type="text" class="form-control" name="descripcion"
+                           required="required">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-form-label col-4">Valor de la Tarea</label>
                 <div class="col-8">
-                    <input value="{{$tareas->valor}}" type="number" step="any" class="form-control" name="valor" required="required">
+                    <input value="{{$tareas->valor}}" type="number" step="any" class="form-control" name="valor"
+                           required="required">
                 </div>
             </div>
             @if($tareas->isCaptured)
@@ -34,9 +40,11 @@
                     <select class="form-control" name="" required="required" disabled>
                         @foreach($filtrado as $item)
                             @if($tareas->materia_id == $item->asignatura_id)
-                                <option  selected value="{{$item->asignatura_id}}">{{\App\Models\Asignaturas::find($item->asignatura_id)->nombre}}</option>
+                                <option selected
+                                        value="{{$item->asignatura_id}}">{{\App\Models\Asignaturas::find($item->asignatura_id)->nombre}}</option>
                             @else
-                                <option  value="{{$item->asignatura_id}}">{{\App\Models\Asignaturas::find($item->asignatura_id)->nombre}}</option>
+                                <option
+                                    value="{{$item->asignatura_id}}">{{\App\Models\Asignaturas::find($item->asignatura_id)->nombre}}</option>
                             @endif
                         @endforeach
                     </select>
@@ -46,30 +54,6 @@
                     <select class="form-control" name="periodo" required="required" disabled>
                         @foreach($periodos as $item)
                             @if($tareas->periodo_id == $item->id)
-                                <option  selected value="{{$item->id}}">{{$item->nombre}}</option>
-                            @else
-                                <option  value="{{$item->id}}">{{$item->nombre}}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group row">
-                    <label for="grado" class="col-form-label col-4">Grado</label>
-                    <select class="form-control" name="grado" required="required" disabled>
-                        @foreach($filtrado as $item)
-                            @if($tareas->grado_id == $item->grado_id)
-                                <option selected value="{{$item->grado_id}}">{{\App\Models\Grados::find($item->grado_id)->nombre_largo}}</option>
-                            @else
-                                <option value="{{$item->grado_id}}">{{\App\Models\Grados::find($item->grado_id)->nombre_largo}}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group row">
-                    <label for="grupo" class="col-form-label col-4">Grupo</label>
-                    <select class="form-control" name="grupo" required="required" disabled>
-                        @foreach($grupos as $item)
-                            @if($tareas->grupo_id == $item->id)
                                 <option selected value="{{$item->id}}">{{$item->nombre}}</option>
                             @else
                                 <option value="{{$item->id}}">{{$item->nombre}}</option>
@@ -78,10 +62,37 @@
                     </select>
                 </div>
                 <div class="form-group row">
+                    <label for="grado" class="col-form-label col-4">Grado</label>
+                    <select class="form-control" name="grado" required="required" disabled>
+                        @foreach($grados as $item)
+                            @if($tareas->grado_id == $item->grado_id)
+                                <option selected
+                                        value="{{$item->grado_id}}">{{\App\Models\Grados::find($item->grado_id)->nombre_largo}}</option>
+                            @else
+                                <option
+                                    value="{{$item->grado_id}}">{{\App\Models\Grados::find($item->grado_id)->nombre_largo}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <label for="grupo" class="col-form-label col-4">Grupo</label>
+                    <select class="form-control" name="grupo" required="required" disabled>
+                        @foreach($grupo as $item)
+                            @if($tareas->grupo_id === $item->grupo_id)
+                                <option selected
+                                        value="{{$item->grupo_id}}">{{\App\Models\Grupos::find($item->grupo_id)->nombre}}</option>
+                            @else
+                                <option
+                                    value="{{$item->grupo_id}}">{{\App\Models\Grupos::find($item->grupo_id)->nombre}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group row">
                     <label for="ciclo_escolar" class="col-form-label col-4">Ciclo escolar</label>
                     <input name="ciclo_escolar" value="{{$ciclo->nombre}}" type="text" readonly>
                 </div>
-
             @else
                 <div class="form-group row">
                     <label for="materia" class="col-form-label col-4">Materia</label>
@@ -89,9 +100,11 @@
                         <option value="">selecciona...</option>
                         @foreach($filtrado as $item)
                             @if($tareas->materia_id == $item->asignatura_id)
-                                <option selected value="{{$item->asignatura_id}}">{{\App\Models\Asignaturas::find($item->asignatura_id)->nombre}}</option>
+                                <option selected
+                                        value="{{$item->asignatura_id}}">{{\App\Models\Asignaturas::find($item->asignatura_id)->nombre}}</option>
                             @else
-                                <option value="{{$item->asignatura_id}}">{{\App\Models\Asignaturas::find($item->asignatura_id)->nombre}}</option>
+                                <option
+                                    value="{{$item->asignatura_id}}">{{\App\Models\Asignaturas::find($item->asignatura_id)->nombre}}</option>
                             @endif
                         @endforeach
                     </select>
@@ -113,11 +126,13 @@
                     <label for="grado" class="col-form-label col-4">Grado</label>
                     <select class="form-control" name="grado" required="required">
                         <option value="">selecciona...</option>
-                        @foreach($filtrado as $item)
+                        @foreach($grados as $item)
                             @if($tareas->grado_id == $item->grado_id)
-                                <option selected value="{{$item->grado_id}}">{{\App\Models\Grados::find($item->grado_id)->nombre_largo}}</option>
+                                <option selected
+                                        value="{{$item->grado_id}}">{{\App\Models\Grados::find($item->grado_id)->nombre_largo}}</option>
                             @else
-                                <option value="{{$item->grado_id}}">{{\App\Models\Grados::find($item->grado_id)->nombre_largo}}</option>
+                                <option
+                                    value="{{$item->grado_id}}">{{\App\Models\Grados::find($item->grado_id)->nombre_largo}}</option>
                             @endif
                         @endforeach
                     </select>
@@ -126,11 +141,13 @@
                     <label for="grupo" class="col-form-label col-4">Grupo</label>
                     <select class="form-control" name="grupo" required="required">
                         <option value="">selecciona...</option>
-                        @foreach($grupos as $item)
-                            @if($tareas->grupo_id == $item->id)
-                                <option selected value="{{$item->id}}">{{$item->nombre}}</option>
+                        @foreach($grupo as $item)
+                            @if($tareas->grupo_id == $item->grupo_id)
+                                <option selected
+                                        value="{{$item->grupo_id}}">{{\App\Models\Grupos::find($item->grupo_id)->nombre}}</option>
                             @else
-                                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                <option
+                                    value="{{$item->grupo_id}}">{{\App\Models\Grupos::find($item->grupo_id)->nombre}}</option>
                             @endif
                         @endforeach
                     </select>
@@ -143,7 +160,8 @@
             <div class="form-group row">
                 <div class="col-8 offset-4">
                     <button id="button" type="submit" class="btn btn-primary btn-lg">Guardar</button>
-                    <input type="button" class= "btn btn-primary btn-lg"onclick="history.back()" name="volver atrás" value="volver atrás">
+                    <input type="button" class="btn btn-primary btn-lg" onclick="history.back()" name="volver atrás"
+                           value="volver atrás">
                 </div>
             </div>
         </form>

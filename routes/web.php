@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AlumnoController;
+use App\Http\Controllers\AsignaturaController;
+use App\Http\Controllers\ClaseController;
+use App\Http\Controllers\GrupoAlumnoController;
 use App\Http\Controllers\ListaDocController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PersonalController;
@@ -55,7 +59,10 @@ Route::resource('permissions', PermissionController::class)->middleware(['auth']
 Route::resource('roles', RoleController::class)->middleware(['auth']);
 Route::resource('users',UserController::class)->middleware(['auth']);
 Route::resource('personal',PersonalController::class)->middleware(['auth']);
-
+Route::resource('student', AlumnoController::class)->middleware(['auth']);
+Route::resource('clases', ClaseController::class)->middleware(['auth']);
+Route::resource('asignaturas', AsignaturaController::class)->middleware(['auth']);
+Route::resource('grupo-alumnos', GrupoAlumnoController::class)->middleware(['auth']);
 //Archivo de rutas de usuario
 require __DIR__ . '/auth.php';
 

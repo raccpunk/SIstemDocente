@@ -20,7 +20,7 @@
         <div class="table-responsive ">
             <form action="{{route('Tarea.postAlumnos')}}" method="POST">
                 @csrf
-                <table id="dtDynamicVerticalScrollExample" class="table">
+                <table class="table">
                     <thead class="text-center table-dark">
                     <tr>
                         <th>#</th>
@@ -37,11 +37,11 @@
                             </td>
                             <td>
                                 @if(\App\Models\AlumnoTareas::where('tarea_id',$tarea)->where('alumno_id',$alumno->id)->first() !== null)
-                                    <input type="text" class="form-control-md" name="Alumnos[calif][]" required
+                                    <input type="number" class="form-control-md" name="Alumnos[calif][]" required max="10" min="1"
                                            value="{{\App\Models\AlumnoTareas::where('tarea_id',$tarea)->where('alumno_id',$alumno->id)->first()->calificacion}}">
                                 @else
-                                    <input type="text" class="form-control-md" name="Alumnos[calif][]" required
-                                           value="0">
+                                    <input type="number" class="form-control-md" name="Alumnos[calif][]" required
+                                           value="0" max="10" min="1">
                                 @endif
                             </td>
                             <input type="hidden" name="tarea" value="{{$tarea}}">

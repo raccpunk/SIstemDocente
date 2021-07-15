@@ -18,8 +18,8 @@ class ComposerStaticInit5a8eca67c0f62777ae6d465e36e94277
         '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
-        'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
+        'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
@@ -35,10 +35,10 @@ class ComposerStaticInit5a8eca67c0f62777ae6d465e36e94277
         '7e9bd612cc444b3eed788ebbe46263a0' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/autoload.php',
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         '9cdd7b9056abc3081735233ba9dd9c7f' => __DIR__ . '/..' . '/facade/flare-client-php/src/helpers.php',
+        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
-        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
     );
 
@@ -146,6 +146,7 @@ class ComposerStaticInit5a8eca67c0f62777ae6d465e36e94277
         array (
             'Illuminate\\Support\\' => 19,
             'Illuminate\\' => 11,
+            'Ibex\\CrudGenerator\\' => 19,
         ),
         'G' => 
         array (
@@ -469,6 +470,10 @@ class ComposerStaticInit5a8eca67c0f62777ae6d465e36e94277
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
         ),
+        'Ibex\\CrudGenerator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ibex/crud-generator/src',
+        ),
         'GuzzleHttp\\Psr7\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
@@ -641,7 +646,11 @@ class ComposerStaticInit5a8eca67c0f62777ae6d465e36e94277
         'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\ListaDocController' => __DIR__ . '/../..' . '/app/Http/Controllers/ListaDocController.php',
+        'App\\Http\\Controllers\\PermissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/PermissionController.php',
+        'App\\Http\\Controllers\\PersonalController' => __DIR__ . '/../..' . '/app/Http/Controllers/PersonalController.php',
+        'App\\Http\\Controllers\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/RoleController.php',
         'App\\Http\\Controllers\\TareasController' => __DIR__ . '/../..' . '/app/Http/Controllers/TareasController.php',
+        'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -652,6 +661,8 @@ class ComposerStaticInit5a8eca67c0f62777ae6d465e36e94277
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
+        'App\\Http\\Requests\\UserCreateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UserCreateRequest.php',
+        'App\\Http\\Requests\\UserEditRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UserEditRequest.php',
         'App\\Models\\AlumnoTareas' => __DIR__ . '/../..' . '/app/Models/AlumnoTareas.php',
         'App\\Models\\Alumnos' => __DIR__ . '/../..' . '/app/Models/Alumnos.php',
         'App\\Models\\Asignaturas' => __DIR__ . '/../..' . '/app/Models/Asignaturas.php',
@@ -660,8 +671,10 @@ class ComposerStaticInit5a8eca67c0f62777ae6d465e36e94277
         'App\\Models\\Grados' => __DIR__ . '/../..' . '/app/Models/Grados.php',
         'App\\Models\\GrupoAlumno' => __DIR__ . '/../..' . '/app/Models/GrupoAlumno.php',
         'App\\Models\\Grupos' => __DIR__ . '/../..' . '/app/Models/Grupos.php',
+        'App\\Models\\Instituciones' => __DIR__ . '/../..' . '/app/Models/Instituciones.php',
         'App\\Models\\Periodos' => __DIR__ . '/../..' . '/app/Models/Periodos.php',
         'App\\Models\\Personal' => __DIR__ . '/../..' . '/app/Models/Personal.php',
+        'App\\Models\\Puestos' => __DIR__ . '/../..' . '/app/Models/Puestos.php',
         'App\\Models\\Tareas' => __DIR__ . '/../..' . '/app/Models/Tareas.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -2332,6 +2345,10 @@ class ComposerStaticInit5a8eca67c0f62777ae6d465e36e94277
         'Hamcrest\\Type\\IsString' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Type/IsString.php',
         'Hamcrest\\Util' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
         'Hamcrest\\Xml\\HasXPath' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
+        'Ibex\\CrudGenerator\\Commands\\CrudGenerator' => __DIR__ . '/..' . '/ibex/crud-generator/src/Commands/CrudGenerator.php',
+        'Ibex\\CrudGenerator\\Commands\\GeneratorCommand' => __DIR__ . '/..' . '/ibex/crud-generator/src/Commands/GeneratorCommand.php',
+        'Ibex\\CrudGenerator\\CrudServiceProvider' => __DIR__ . '/..' . '/ibex/crud-generator/src/CrudServiceProvider.php',
+        'Ibex\\CrudGenerator\\ModelGenerator' => __DIR__ . '/..' . '/ibex/crud-generator/src/ModelGenerator.php',
         'Illuminate\\Auth\\Access\\AuthorizationException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/AuthorizationException.php',
         'Illuminate\\Auth\\Access\\Events\\GateEvaluated' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/Events/GateEvaluated.php',
         'Illuminate\\Auth\\Access\\Gate' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/Gate.php',

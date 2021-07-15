@@ -6,7 +6,7 @@
         <div class="table-responsive m-5">
             <form action="{{route('Tarea.Alumnos')}}" method="POST">
                 @csrf
-                <table id="dtDynamicVerticalScrollExample" class="table">
+                <table class="table">
                     <thead class="text-center table-dark">
                     <tr>
                         <th>#</th>
@@ -21,7 +21,7 @@
                             <td><input type="hidden" name="Alumnos[id][]"
                                        value="{{$alumno->id}}">{{$alumno->apellido_paterno.' '.$alumno->apellido_materno.' '.$alumno->nombres}}
                             </td>
-                            <td><input type="text" class="form-control-md" name="Alumnos[calif][]" required></td>
+                            <td><input max="10" min="1" type="number" class="form-control-md" name="Alumnos[calif][]" required></td>
                             <input type="hidden" name="grupo" value="{{$grupo}}">
                             <input type="hidden" name="grado" value="{{$grado}}">
                             <input type="hidden" name="ciclo_escolar" value="{{$ciclo}}">

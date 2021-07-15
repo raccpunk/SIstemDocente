@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alumnos;
+use App\Models\Alumno;
 use App\Models\AlumnoTareas;
 use App\Models\Asignaturas;
 use App\Models\CicloEscolar;
@@ -24,6 +24,7 @@ use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\JcTable;
+use PhpParser\Node\Expr\Array_;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class TareasController extends Controller
@@ -37,10 +38,19 @@ class TareasController extends Controller
         $maestro_id = Personal::where('usuario_id', Auth::user()->id)->first()->id;
         $clases = Clases::where('maestro_id', $maestro_id)->get();
         $periodos = Periodos::all();
-        $grupos = Grupos::all();
+        $grupos = clases::select('grupo_id')
+            ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
+            ->where('maestro_id',$maestro_id)
+            ->distinct()
+            ->get();
+        $grados = clases::select('grado_id')
+            ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
+            ->where('maestro_id',$maestro_id)
+            ->distinct()
+            ->get();
         $filtrado = $this->super_unique($clases, 'asignatura_id');
         $tareas = Tareas::where('maestro_id', $maestro_id)->get();
-        return view('tareas.Index', compact('periodos', 'grupos', 'filtrado', 'tareas'));
+        return view('tareas.Index', compact('periodos', 'grupos', 'filtrado', 'grados','tareas'));
     }
 
     /**
@@ -52,7 +62,16 @@ class TareasController extends Controller
         $maestro_id = Personal::where('usuario_id', Auth::user()->id)->first()->id;
         $clases = Clases::where('maestro_id', $maestro_id)->get();
         $periodos = Periodos::all();
-        $grupos = Grupos::all();
+        $grupos = clases::select('grupo_id')
+            ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
+            ->where('maestro_id',$maestro_id)
+            ->distinct()
+            ->get();
+        $grados = clases::select('grado_id')
+            ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
+            ->where('maestro_id',$maestro_id)
+            ->distinct()
+            ->get();
         $filtrado = $this->super_unique($clases, 'asignatura_id');
         $tareas = Tareas::where('maestro_id', $maestro_id)
             ->where('materia_id', $request->asignatura)
@@ -60,7 +79,7 @@ class TareasController extends Controller
             ->where('grupo_id', $request->grupo)
             ->where('periodo_id', $request->periodo)
             ->get();
-        return view('tareas.Index', compact('periodos', 'grupos', 'filtrado', 'tareas'));
+        return view('tareas.Index', compact('periodos', 'grupos','grados','filtrado', 'tareas'));
     }
 
     /**
@@ -71,10 +90,19 @@ class TareasController extends Controller
         $maestro_id = Personal::where('usuario_id', Auth::user()->id)->first()->id;
         $clases = Clases::where('maestro_id', $maestro_id)->get();
         $periodos = Periodos::all();
-        $grupos = Grupos::all();
+        $grupos = clases::select('grupo_id')
+            ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
+            ->where('maestro_id',$maestro_id)
+            ->distinct()
+            ->get();
+        $grados = clases::select('grado_id')
+            ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
+            ->where('maestro_id',$maestro_id)
+            ->distinct()
+            ->get();
         $filtrado = $this->super_unique($clases, 'asignatura_id');
         $ciclo = CicloEscolar::orderBy('fecha_inicio', 'asc')->first();
-        return view('tareas.Create', compact('periodos', 'filtrado', 'grupos', 'ciclo'));
+        return view('tareas.Create', compact('periodos', 'filtrado', 'grados','grupos', 'ciclo'));
     }
 
     /**
@@ -107,11 +135,21 @@ class TareasController extends Controller
         $maestro_id = Personal::where('usuario_id', Auth::user()->id)->first()->id;
         $clases = Clases::where('maestro_id', $maestro_id)->get();
         $periodos = Periodos::all();
-        $grupos = Grupos::all();
+        $grupo = clases::select('grupo_id')
+            ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
+            ->where('maestro_id',$maestro_id)
+            ->distinct()
+            ->get();
+        $grados = clases::select('grado_id')
+            ->join('asignaturas', 'asignaturas.id', '=', 'clases.asignatura_id')
+            ->where('maestro_id',$maestro_id)
+            ->distinct()
+            ->get();
+//        dd($grados,$grupo);
         $filtrado = $this->super_unique($clases, 'asignatura_id');
         $ciclo = CicloEscolar::orderBy('fecha_inicio', 'asc')->first();
         $tareas = Tareas::find($tarea);
-        return view('tareas.update', compact('tareas', 'periodos', 'filtrado', 'grupos', 'ciclo'));
+        return view('tareas.update', compact('tareas', 'periodos', 'filtrado','grados', 'grupo', 'ciclo'));
     }
 
     /**
@@ -157,7 +195,7 @@ class TareasController extends Controller
         $grupoAlumno = GrupoAlumno::where('grado_id', $grado)->where('grupo_id', $grupo)->where('ciclo_escolar_id', $ciclo)->get();
         $alumnos = [];
         foreach ($grupoAlumno as $item) {
-            array_push($alumnos, Alumnos::where('id', $item->alumno_id)->first());
+            array_push($alumnos, Alumno::where('id', $item->alumno_id)->first());
         }
         sort($alumnos);
         return view('tareas.Alumnos', compact('alumnos', 'tarea', 'grado', 'grupo', 'periodo', 'ciclo'));
@@ -176,7 +214,7 @@ class TareasController extends Controller
         $grupoAlumno = GrupoAlumno::where('grado_id', $grado)->where('grupo_id', $grupo)->where('ciclo_escolar_id', $ciclo)->get();
         $alumnos = [];
         foreach ($grupoAlumno as $item) {
-            array_push($alumnos, Alumnos::where('id', $item->alumno_id)->first());
+            array_push($alumnos, Alumno::where('id', $item->alumno_id)->first());
         }
         sort($alumnos);
         return view('tareas.Details', compact('alumnos', 'tarea', 'grado', 'grupo', 'periodo', 'ciclo'));
@@ -219,7 +257,7 @@ class TareasController extends Controller
         $grupoAlumno = GrupoAlumno::where('grado_id', $grado)->where('grupo_id', $grupo)->where('ciclo_escolar_id', $ciclo)->get();
         $alumnos = [];
         foreach ($grupoAlumno as $item) {
-            array_push($alumnos, Alumnos::where('id', $item->alumno_id)->first());
+            array_push($alumnos, Alumno::where('id', $item->alumno_id)->first());
         }
         sort($alumnos);
         return view('tareas.AlumnosUpdate', compact('tarea', 'alumnos'));
@@ -306,7 +344,7 @@ class TareasController extends Controller
         $nombre_asignatura = Asignaturas::find($asignatura)->nombre;
         $nombre_periodo = Periodos::find($periodo)->nombre;
         $maestro = Personal::where('usuario_id', Auth::user()->id)->first();
-        $nombre_maestro = $maestro->nombres. ' ' .$maestro->apellidos;
+        $nombre_maestro = $maestro->nombres . ' ' . $maestro->apellidos;
         $nombre_ciclo = CicloEscolar::orderBy('fecha_inicio', 'asc')->first()->nombre;
         $nombre_grado = Grados::find($grado)->nombre_corto;
         $nombre_grupo = Grupos::find($grupo)->nombre;
@@ -326,7 +364,7 @@ class TareasController extends Controller
         $ciclo_escolar = CicloEscolar::orderBy('fecha_inicio', 'asc')->first()->id;
 
         //get alumnos
-        $alumnos = Alumnos::select('*')
+        $alumnos = Alumno::select('*')
             ->join('grupo_alumnos', 'grupo_alumnos.alumno_id', '=', 'alumnos.id')
             ->where('grupo_alumnos.ciclo_escolar_id', $ciclo_escolar)
             ->where('grupo_id', $grupo)
@@ -353,7 +391,7 @@ class TareasController extends Controller
             foreach ($tareas as $tarea) {
                 $alumnoTareas = AlumnoTareas::select('*')->where('alumno_id', $alumno->alumno_id)->where('tarea_id', $tarea->id)->first();
                 if ($alumnoTareas !== null) {
-                    $calif = round(($alumnoTareas->calificacion * $tarea->valor)/10, 2);
+                    $calif = round(($alumnoTareas->calificacion * $tarea->valor) / 10, 2);
                     $table->addCell(500)->addText($alumnoTareas->calificacion);
                     $calificacion += $calif;
                     $totalTareas += $tarea->valor;
@@ -361,7 +399,7 @@ class TareasController extends Controller
                     $table->addCell(500)->addText('0');
                 }
             }
-            $promedio = ($calificacion / $totalTareas) * 10 ;
+            $promedio = ($calificacion / $totalTareas) * 10;
             $table->addCell(500)->addText($promedio);
         }
         //create doc

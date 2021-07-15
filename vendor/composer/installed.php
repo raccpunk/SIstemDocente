@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'dae192bd56e4f07b44bb2ae3c460cd120e3ec1c1',
+        'reference' => '7c95c95ddc224853a5406ef18452a247aa491820',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -310,6 +310,15 @@
             'reference' => '8c3d0a3f6af734494ad8f6fbbee0ba92422859f3',
             'dev_requirement' => true,
         ),
+        'ibex/crud-generator' => array(
+            'pretty_version' => 'v1.3',
+            'version' => '1.3.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../ibex/crud-generator',
+            'aliases' => array(),
+            'reference' => '28bad86e286b9952453acb3687c8016a01022658',
+            'dev_requirement' => false,
+        ),
         'illuminate/auth' => array(
             'dev_requirement' => false,
             'replaced' => array(
@@ -553,7 +562,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'dae192bd56e4f07b44bb2ae3c460cd120e3ec1c1',
+            'reference' => '7c95c95ddc224853a5406ef18452a247aa491820',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
