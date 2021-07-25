@@ -40,8 +40,6 @@
     button.addEventListener('click', function () {
         let grado = document.getElementById('grado').value;
         let grupo = document.getElementById('grupo').value;
-        console.log(grado)
-
         if (grado !== '' && grupo !== '') {
             alert.style.visibility = 'hidden';
             url = `http://${window.location.host}/asistenciaDoc/${grado}/${grupo}`;

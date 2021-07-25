@@ -21,6 +21,7 @@ class CreateAlumnoTaskTable extends Migration
             $table->foreignId('ciclo_escolar_id')->references('id')->on('ciclo_escolar');
             $table->foreignId('tarea_id')->references('id')->on('tareas');
             $table->foreignId('periodo_id')->references('id')->on('periodos');
+            $table->char('tipo_tarea');
             $table->decimal('calificacion');
             $table->timestamps();
         });

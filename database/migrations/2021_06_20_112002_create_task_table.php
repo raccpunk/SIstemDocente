@@ -21,6 +21,7 @@ class CreateTaskTable extends Migration
             $table->foreignId('grupo_id')->references('id')->on('grupos');
             $table->foreignId('ciclo_escolar_id')->references('id')->on('ciclo_escolar');
             $table->foreignId('periodo_id')->references('id')->on('periodos');
+            $table->char('tipo');
             $table->text('descripcion');
             $table->text('nombre');
             $table->decimal('valor');

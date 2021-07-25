@@ -31,7 +31,21 @@
                 <label class="col-form-label col-4">Valor de la Tarea</label>
                 <div class="col-8">
                     <input value="{{$tareas->valor}}" type="number" step="any" class="form-control" name="valor"
-                           required="required">
+                           min="1" max="{{$tareas->valor}}" required="required">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label col-4">Tipo</label>
+                <div class="col-8">
+                    <select name="tipo" id="tipo">
+                        @if($tareas->tipo ==='A')
+                            <option selected value="A">A</option>
+                            <option value="B">B</option>
+                        @else
+                            <option value="A">A</option>
+                            <option selected value="B">B</option>
+                        @endif
+                    </select>
                 </div>
             </div>
             @if($tareas->isCaptured)

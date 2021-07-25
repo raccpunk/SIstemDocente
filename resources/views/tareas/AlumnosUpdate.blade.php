@@ -37,11 +37,11 @@
                             </td>
                             <td>
                                 @if(\App\Models\AlumnoTareas::where('tarea_id',$tarea)->where('alumno_id',$alumno->id)->first() !== null)
-                                    <input type="number" class="form-control-md" name="Alumnos[calif][]" required max="10" min="1"
+                                    <input type="number" class="form-control-md" name="Alumnos[calif][]" required max="10.0" min="1.0" step="0.1"
                                            value="{{\App\Models\AlumnoTareas::where('tarea_id',$tarea)->where('alumno_id',$alumno->id)->first()->calificacion}}">
                                 @else
                                     <input type="number" class="form-control-md" name="Alumnos[calif][]" required
-                                           value="0" max="10" min="1">
+                                           value="0" max="10.0" min="1.0" step="0.1">
                                 @endif
                             </td>
                             <input type="hidden" name="tarea" value="{{$tarea}}">

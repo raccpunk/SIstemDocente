@@ -21,7 +21,7 @@
                             <td><input type="hidden" name="Alumnos[id][]"
                                        value="{{$alumno->id}}">{{$alumno->apellido_paterno.' '.$alumno->apellido_materno.' '.$alumno->nombres}}
                             </td>
-                            <td><input max="10" min="1" type="number" class="form-control-md" name="Alumnos[calif][]" required></td>
+                            <td><input max="10.0" min="1.0" step="0.1" type="number" class="form-control-md" name="Alumnos[calif][]" required></td>
                             <input type="hidden" name="grupo" value="{{$grupo}}">
                             <input type="hidden" name="grado" value="{{$grado}}">
                             <input type="hidden" name="ciclo_escolar" value="{{$ciclo}}">

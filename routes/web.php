@@ -49,11 +49,14 @@ Route::get('/deletetask/{tarea}', [TareasController::class, 'destroy'])->middlew
 //Vista de descargar tareas por periodo
 Route::get('/tareascalif', [TareasController::class, 'viewTaskCalif'])->middleware(['auth'])->name('Tarea.Calif');
 //Descargar calificaciones del periodo
-Route::get('/taskcalifperiod/{asignatura}/{grado}/{grupo}/{periodo}', [TareasController::class, 'downloadTasksDoc'])->middleware(['auth']);
+Route::get('/taskcalifperiod/{asignatura}/{grado}/{grupo}/{periodo}/{tipo}', [TareasController::class, 'downloadTasksDoc'])->middleware(['auth']);
 //Vista de lista de asistencia
 Route::get('/asistencia', [ListaDocController::class, 'index'])->middleware(['auth'])->name('Asistencia.Index');
 //Descargar lista de asistencia
 Route::get('/asistenciaDoc/{grado}/{grupo}', [ListaDocController::class, 'asistenciaword'])->middleware(['auth'])->name('Asistencia.Download');
+//obtener maximo de tareas
+Route::get('/getmax/{asignatura}/{grado}/{grupo}/{periodo}/{tipo}',[TareasController::class,'getMax']);
+
 
 Route::resource('permissions', PermissionController::class)->middleware(['auth']);
 Route::resource('roles', RoleController::class)->middleware(['auth']);

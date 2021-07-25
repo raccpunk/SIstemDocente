@@ -50,7 +50,9 @@ class TareasController extends Controller
             ->get();
         $filtrado = $this->super_unique($clases, 'asignatura_id');
         $tareas = Tareas::where('maestro_id', $maestro_id)->get();
-        return view('tareas.Index', compact('periodos', 'grupos', 'filtrado', 'grados', 'tareas'));
+        $tipo = Tareas::select('tipo')->where('maestro_id', $maestro_id)->distinct()->orderBy('tipo', 'asc')->get();
+
+        return view('tareas.Index', compact('periodos', 'grupos', 'filtrado', 'grados', 'tareas', 'tipo'));
     }
 
     /**
@@ -73,13 +75,15 @@ class TareasController extends Controller
             ->distinct()
             ->get();
         $filtrado = $this->super_unique($clases, 'asignatura_id');
+        $tipo = Tareas::select('tipo')->where('maestro_id', $maestro_id)->distinct()->orderBy('tipo', 'asc')->get();
         $tareas = Tareas::where('maestro_id', $maestro_id)
             ->where('materia_id', $request->asignatura)
             ->where('grado_id', $request->grado)
             ->where('grupo_id', $request->grupo)
             ->where('periodo_id', $request->periodo)
+            ->where('tipo', $request->tipo)
             ->get();
-        return view('tareas.Index', compact('periodos', 'grupos', 'grados', 'filtrado', 'tareas'));
+        return view('tareas.Index', compact('periodos', 'grupos', 'grados', 'filtrado', 'tareas', 'tipo'));
     }
 
     /**
@@ -102,7 +106,13 @@ class TareasController extends Controller
             ->get();
         $filtrado = $this->super_unique($clases, 'asignatura_id');
         $ciclo = CicloEscolar::orderBy('fecha_inicio', 'asc')->first();
-        return view('tareas.Create', compact('periodos', 'filtrado', 'grados', 'grupos', 'ciclo'));
+        return view('tareas.Create', compact('periodos', 'ciclo', 'grupos', 'grados', 'filtrado',));
+    }
+
+    public function getMax($asignatura, $grado, $grupo, $periodo, $tipo)
+    {
+        $valor_max = Tareas::select('valor')->where('materia_id', $asignatura)->where('grado_id', $grado)->where("grupo_id", $grupo)->where('periodo_id', $periodo)->where('tipo', $tipo)->get()->sum('valor');
+        return response()->json($valor_max,200);
     }
 
     /**
@@ -120,6 +130,7 @@ class TareasController extends Controller
         $tarea->ciclo_escolar_id = CicloEscolar::orderBy('fecha_inicio', 'asc')->first()->id;
         $tarea->materia_id = $request->materia;
         $maestro_id = Personal::where('usuario_id', Auth::user()->id)->first()->id;
+        $tarea->tipo = $request->tipo;
         $tarea->isCaptured = false;
         $tarea->maestro_id = $maestro_id;
         $tarea->save();
@@ -163,6 +174,7 @@ class TareasController extends Controller
         $tarea->nombre = $request->nombre;
         $tarea->descripcion = $request->descripcion;
         $tarea->valor = $request->valor;
+        $tarea->tipo = $request->tipo;
         $tarea->save();
         return $this->index();
     }
@@ -237,6 +249,7 @@ class TareasController extends Controller
             $alumnoTarea->periodo_id = $request->periodo;
             $alumnoTarea->alumno_id = $request->Alumnos['id'][$key];
             $alumnoTarea->calificacion = $calif;
+            $alumnoTarea->tipo_tarea = $tareaMaestro->tipo;
             $alumnoTarea->save();
         }
         $tareaMaestro->isCaptured = true;
@@ -311,12 +324,8 @@ class TareasController extends Controller
             ->get();
 //        dd($grados,$grupo);
         $filtrado = $this->super_unique($clases, 'asignatura_id');
-        return view('tareas.CalificacionesPeridoo', compact('filtrado', 'periodos', 'grados', 'grupos'));
-    }
-
-    public function viewCalifPeriod()
-    {
-
+        $tipos = Tareas::select('tipo')->where('maestro_id', $maestro_id)->distinct()->orderBy('tipo', 'asc')->get();
+        return view('tareas.CalificacionesPeridoo', compact('filtrado', 'periodos', 'grados', 'grupos', 'tipos'));
     }
 
     /**
@@ -327,7 +336,7 @@ class TareasController extends Controller
      * @return BinaryFileResponse
      * @throws Exception
      */
-    public function downloadTasksDoc($asignatura, $grado, $grupo, $periodo): BinaryFileResponse
+    public function downloadTasksDoc($asignatura, $grado, $grupo, $periodo, $tipo)
     {
         $phpWord = new PhpWord();
         $section = $phpWord->addSection(array('orientation' => 'landscape'));
@@ -364,7 +373,7 @@ class TareasController extends Controller
         $section->addText('                                                                       ' . $nombre_ciclo, $header);
         $section->addText('                                                                                               PROF:' . $nombre_maestro . '   ASIGNATURA:' . $nombre_asignatura . '', $fontStyleName);
         $section->addText('                                                                                               MES:' . $mesperiodo . '  PERIODO:' . $nombre_periodo . ' GRUPO:' . $nombre_grado . $nombre_grupo, $fontStyleName);
-        $section->addText(' ');
+        $section->addText('                                                                                               TIPO: ' . $tipo, $fontStyleName);
 
 
         $fancyTableStyleName = 'Prueba Con Tablas';
@@ -386,40 +395,46 @@ class TareasController extends Controller
         $table->addCell(500)->addText(' No', $nature);
         $table->addCell(4000)->addText('NOMBRE', $nature);
         $tareas = Tareas::select('*')->where('ciclo_escolar_id', $ciclo_escolar)->where('materia_id', $asignatura)->where('grupo_id', $grupo)
-            ->where('grado_id', $grado)->where('maestro_id', Personal::where('usuario_id', Auth::user()->id)->first()->id)->where('isCaptured', true)->get();
-        foreach ($tareas as $tarea) {
-            $table->addCell(500)->addText($tarea->nombre, $nature);
-        }
-        $table->addCell(500)->addText('Promedio');
+            ->where('grado_id', $grado)->where('maestro_id', Personal::where('usuario_id', Auth::user()->id)->first()->id)->where('isCaptured', true)->where('tipo', $tipo)->get();
+
+        if (count($tareas) === 0) {
+            return redirect()->route('Tarea.Calif')->with('danger', 'No hay calificaciones de tareas con esos filtros');
+        } else {
+            foreach ($tareas as $tarea) {
+                $table->addCell(500)->addText($tarea->nombre, $nature);
+            }
+            $table->addCell(500)->addText('Promedio');
 
 //start student row
-        foreach ($alumnos as $key => $alumno) {
-            $table->addRow();
-            $table->addCell(500)->addText($key + 1);
-            $table->addCell(6000)->addText($alumno->apellido_paterno . ' ' . $alumno->apellido_materno . ' ' . $alumno->nombres);
-            $calificacion = 0;
-            $totalTareas = 0;
-            $promedio = 0;
-            foreach ($tareas as $tarea) {
-                $alumnoTareas = AlumnoTareas::select('*')->where('alumno_id', $alumno->alumno_id)->where('tarea_id', $tarea->id)->first();
-                if ($alumnoTareas !== null) {
-                    $calif = round(($alumnoTareas->calificacion * $tarea->valor) / 10, 2);
-                    $table->addCell(500)->addText($alumnoTareas->calificacion);
-                    $calificacion += $calif;
-                    $totalTareas += $tarea->valor;
-                } else {
-                    $table->addCell(500)->addText('0');
+            foreach ($alumnos as $key => $alumno) {
+                $table->addRow();
+                $table->addCell(500)->addText($key + 1);
+                $table->addCell(6000)->addText($alumno->apellido_paterno . ' ' . $alumno->apellido_materno . ' ' . $alumno->nombres);
+                $calificacion = 0;
+                $totalTareas = 0;
+                $promedio = 0;
+                foreach ($tareas as $tarea) {
+                    $alumnoTareas = AlumnoTareas::select('*')->where('alumno_id', $alumno->alumno_id)->where('tarea_id', $tarea->id)->first();
+                    if ($alumnoTareas !== null) {
+                        $calif = round(($alumnoTareas->calificacion * $tarea->valor) / 100, 2);
+                        $table->addCell(500)->addText($alumnoTareas->calificacion);
+                        $calificacion += $calif;
+                        $totalTareas += $tarea->valor;
+                    } else {
+                        $table->addCell(500)->addText('0');
+                    }
                 }
+                $promedio = round(($calificacion / $totalTareas) * 10, 2);
+                $table->addCell(500)->addText($promedio);
             }
-            $promedio = round(($calificacion / $totalTareas) * 10,2);
-            $table->addCell(500)->addText($promedio);
-        }
-        //create doc
-        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save('Calificacion.docx');
+            //create doc
+            $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+            $objWriter->save('Calificacion' . $nombre_grado . $nombre_grupo . '.docx');
 
-        //download doc and delete after send
-        return response()->download('Calificacion.docx')->deleteFileAfterSend();
+            //download doc and delete after send
+            return response()->download('Calificacion' . $nombre_grado . $nombre_grupo . '.docx')->deleteFileAfterSend();
+        }
+
     }
 
     /**
