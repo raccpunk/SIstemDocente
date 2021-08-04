@@ -37,7 +37,7 @@
                     @endforeach
                 </select>
                 <select class="wrapper col-md-2 mt-2 mr-5" name="tipo" id="tipo" required>
-                    <option value="">clase...</option>
+                    <option value="">Momento...</option>
                     @foreach($tipos as $item)
                         <option value="{{$item->tipo}}">{{$item->tipo}}</option>
                     @endforeach
