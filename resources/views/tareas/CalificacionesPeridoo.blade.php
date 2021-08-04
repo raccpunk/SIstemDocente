@@ -10,34 +10,34 @@
             <div class="text-center">
 
                 <select class=" wrapper col-md-2 mt-2 mr-5" name="asignatura" id="asignatura" required>
-                    <option value="">selecciona...</option>
+                    <option value="">Asignatura...</option>
                     @foreach($filtrado as $item)
                         <option
                             value="{{$item->asignatura_id}}">{{\App\Models\Asignaturas::find($item->asignatura_id)->nombre}}</option>
                     @endforeach
                 </select>
                 <select class=" wrapper col-md-2 mt-2 mr-5" name="grado" id="grado" required>
-                    <option value="">selecciona...</option>
+                    <option value="">Grado...</option>
                     @foreach($grados as $item)
                         <option
                             value="{{$item->grado_id}}">{{\App\Models\Grados::find($item->grado_id)->nombre_largo}}</option>
                     @endforeach
                 </select>
                 <select class=" wrapper col-md-2 mt-2 mr-5" name="grupo" id="grupo" required>
-                    <option value="">selecciona...</option>
+                    <option value="">Grupo...</option>
                     @foreach($grupos as $item)
                         <option
                             value="{{$item->grupo_id}}">{{\App\Models\Grupos::find($item->grupo_id)->nombre}}</option>
                     @endforeach
                 </select>
                 <select class="wrapper col-md-2 mt-2 mr-5" name="periodo" id="periodo" required>
-                    <option value="">selecciona...</option>
+                    <option value="">Periodo...</option>
                     @foreach($periodos as $item)
                         <option value="{{$item->id}}">{{$item->nombre}}</option>
                     @endforeach
                 </select>
                 <select class="wrapper col-md-2 mt-2 mr-5" name="tipo" id="tipo" required>
-                    <option value="">selecciona...</option>
+                    <option value="">clase...</option>
                     @foreach($tipos as $item)
                         <option value="{{$item->tipo}}">{{$item->tipo}}</option>
                     @endforeach

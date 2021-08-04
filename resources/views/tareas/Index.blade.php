@@ -6,7 +6,7 @@
                 <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="grado">Grado</label>
                 <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="grupo">Grupo</label>
                 <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="periodo">Periodos</label>
-                <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="periodo">Tipo</label>
+                <label style="font-size: 30px;" class="col-md-2 mt-2 mr-5" for="periodo">Clase</label>
             </div>
         </div>
 
@@ -75,7 +75,7 @@
                     <th>Grupo</th>
                     <th>Periodo</th>
                     <th>Ciclo escolar</th>
-                    <th>Tipo</th>
+                    <th>clase</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>

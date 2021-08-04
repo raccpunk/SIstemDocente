@@ -424,7 +424,7 @@ class TareasController extends Controller
                         $table->addCell(500)->addText('0');
                     }
                 }
-                $promedio = round(($calificacion / $totalTareas) * 10, 2);
+                $promedio = round(($calificacion / $totalTareas) * 100, 2);
                 $table->addCell(500)->addText($promedio);
             }
             //create doc
