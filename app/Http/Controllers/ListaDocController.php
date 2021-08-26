@@ -31,7 +31,7 @@ class ListaDocController extends Controller
         );
         $header = array('size' => 14, 'bold' => true,'align'=>'both');
         $nature = array('size' => 11, 'bold' => true);
-        $sources = file_get_contents(__DIR__.'/img/imgdoc.png');
+        $sources = realpath(__DIR__.'/img/imgdoc.png');
         $section->addImage(
             $sources,
             array(
